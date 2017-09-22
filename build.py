@@ -19,6 +19,7 @@ import filter_log
 import mail
 import fir
 import bugly
+import dingtalk_bot
 
 if __name__ == "__main__":
 
@@ -68,9 +69,21 @@ if __name__ == "__main__":
         if mail_info['enable']:
             print '发送 email...'
             if mail_info['send_filter_log']:
-                log = filter_log.filter_log('782d124')
+                log = filter_log.msg_with_intall_info('782d124', build_target)
                 mail.send_success_msg(log, build_target)
             else:
                 mail.send_success_msg("打包成功!", build_target)
             print '发送完成!'
+        
+        ding_info = config.config_dic['send_ding_msg_after_build']
+        if ding_info['enable']:
+            print '发送钉钉消息...'
+            tokens = ding_info['tokens']
+            if ding_info['send_filter_log']:
+                log = filter_log.msg_with_intall_info('782d124', build_target)
+                dingtalk_bot.sendMessage(log, tokens)
+            else:
+                dingtalk_bot.sendMessage('打包成功!', tokens)
+            print '发送完成!'
+
     print '打包完毕!'
