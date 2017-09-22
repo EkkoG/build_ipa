@@ -16,7 +16,7 @@ import shlex
 def call(cmd, output=PIPE):
     """ call a command string """
     args = shlex.split(cmd)
-    p = subprocess.Popen(args, stdout=output, stderr=output)
+    p = subprocess.Popen(args, stdin=None, stdout=output, stderr=output)
     out, err = p.communicate()
     return (p.returncode, out, err)
 

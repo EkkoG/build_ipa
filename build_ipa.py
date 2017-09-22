@@ -10,6 +10,7 @@
 build ipa
 """
 
+import os
 from call_cmd import call
 
 import config
@@ -21,7 +22,9 @@ def build_ipa(target=None):
     archive_path = config.config_dic['builds_path'] + scheme_name + '.xcarchive'
 
     archive_cmd = "xcodebuild archive -workspace {} -scheme {} -archivePath {} ONLY_ACTIVE_ARCH=NO TARGETED_DEVICE_FAMILY=1 -allowProvisioningUpdates".format(config.config_dic['project_path'] + config.config_dic['worspace_name'], scheme_name, archive_path)
-    res = call(archive_cmd)
+    log_file = config.config_dic['builds_path'] + config.config_dic['builg_log']
+    file = open(log_file, 'w+')
+    res = call(archive_cmd, file)
 
     if res[0] != 0:
         return (1, None, None)
@@ -60,12 +63,18 @@ def build_ipa(target=None):
         f.write(export_plist)
 
     export_cmd = "xcodebuild -exportArchive -archivePath {} -exportOptionsPlist {} -exportPath {} -allowProvisioningUpdates".format(archive_path, export_plist_path, config.config_dic['builds_path'])
-    res = call(export_cmd)
+    res = call(export_cmd, file)
 
     if res[0] != 0:
         return [1, None, None ]
 
-    return [res, archive_path, config.config_dic["builds_path"] + scheme_name + '.ipa' ]
+    ipa_path = config.config_dic["builds_path"] + scheme_name + '.ipa'
+    
+    if not os.path.exists(ipa_path):
+        return [1, None, None ]
+
+    file.close
+    return [0, archive_path,  ipa_path]
 
 if __name__ == "__main__":
     build_ipa()

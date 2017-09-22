@@ -10,17 +10,70 @@
 build progress
 """
 
+import os
 from call_cmd import call, runPipe
 import config
 import build_ipa
 import filter_log
 import mail
+import fir
+import bugly
 
 if __name__ == "__main__":
+
     config.init('/Users/ciel/Documents/build.yaml')
-
     log = filter_log.filter_log('782d124')
-    print(log)
-    # mail.send_success_msg(log, 'dev')
 
-#    build_ipa.build_ipa('dev')
+    build_target = 'dev'
+    build_info = config.config_dic['build'][build_target]
+
+    git_info = config.config_dic['git']
+    print '更新代码...'
+    if git_info['pull_before_build']:
+        if git_info['branch']:
+            call('git -C {} pull'.format( git_info['branch']))
+        else:
+            call('git -C {} checkout {}'.format(config.config_dic['branch'], git_info['branch']))
+            call('git -C {} pull'.format(git_info['branch']))
+
+    print '更新代码完成!'
+    print '开始打包...'
+    build_res = build_ipa.build_ipa(build_target)
+    print '打包完成!'
+    if build_res[0] != 0:
+        print '打包失败'
+        failture_mail_info = config.config_dic['email_after_failture']
+        if failture_mail_info['enable']:
+            mail.send_failture_msg('打包失败!', build_target)
+    else:
+        print '打包成功!'
+        cp_info = config.config_dic['copy_to']
+        if cp_info['enable']:
+            path = cp_info['path']
+            if not os.path.exists(path):
+                os.mkdir(path)
+            call('cp ' + build_res[2] + ' ' + path)
+            print '复制到 {}'.format(path)
+        
+        fir_info = config.config_dic['upload_to_fir']
+        if  fir_info['enable']:
+            print '开始上传到 fir.im...'
+            fir.upload(build_res[2], fir_info['token'])
+            print '上传完成!'
+
+        bugly_info = config.config_dic['bugly']
+        if bugly_info['enable']:
+            print '开始上传符号文件...'
+            bugly.upload(build_res[1], build_info)
+            print '上传成功!'
+
+        mail_info = config.config_dic['email_after_build']
+        if mail_info['enable']:
+            print '发送 email...'
+            if mail_info['send_filter_log']:
+                log = filter_log.filter_log('782d124')
+                mail.send_success_msg(log, build_target)
+            else:
+                mail.send_success_msg("打包成功!", build_target)
+            print '发送完成!'
+    print '打包完毕!'

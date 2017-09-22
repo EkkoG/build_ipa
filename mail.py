@@ -25,7 +25,7 @@ def send_success_msg(text, build):
         return
     send(text, get_subject(build), to_user_info['send_to'], to_user_info['cc_to'])
 
-def send_success_msg(text, build):
+def send_failture_msg(text, build):
     to_user_info = config.config_dic['email_after_failture']
     if not to_user_info['enable']:
         return
@@ -33,7 +33,7 @@ def send_success_msg(text, build):
 
 def get_subject(build):
     build_info = config.config_dic['build'][build]
-    version = call('''/usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" {}'''.format(config.config_dic['project_path'] +build_info['info_plist']))[1]
+    version = call('''/usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" {}'''.format(config.config_dic['project_path'] + build_info['info_plist']))[1]
     build_version = call('''/usr/libexec/PlistBuddy -c "Print CFBundleVersion" {}'''.format(config.config_dic['project_path'] + build_info['info_plist']))[1]
     subject = build_info['app_name'] + ' ' + str.strip(version) + ' ' + 'Build' + ' ' + str.strip(build_version)
     return subject
