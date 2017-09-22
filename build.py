@@ -23,7 +23,6 @@ import bugly
 if __name__ == "__main__":
 
     config.init('/Users/ciel/Documents/build.yaml')
-    log = filter_log.filter_log('782d124')
 
     build_target = 'dev'
     build_info = config.config_dic['build'][build_target]
@@ -38,9 +37,8 @@ if __name__ == "__main__":
     print '更新代码完成!'
     print '开始打包...'
     build_res = build_ipa.build_ipa(build_target)
-    print '打包完成!'
     if build_res[0] != 0:
-        print '打包失败'
+        print '打包失败!'
         failture_mail_info = config.config_dic['email_after_failture']
         if failture_mail_info['enable']:
             mail.send_failture_msg('打包失败!', build_target)
