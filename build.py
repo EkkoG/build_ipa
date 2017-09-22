@@ -11,7 +11,8 @@ build progress
 """
 
 import os
-from call_cmd import call, runPipe
+import shutil
+from call_cmd import call
 import config
 import build_ipa
 import filter_log
@@ -31,10 +32,8 @@ if __name__ == "__main__":
     print '更新代码...'
     if git_info['pull_before_build']:
         if git_info['branch']:
-            call('git -C {} pull'.format( git_info['branch']))
-        else:
-            call('git -C {} checkout {}'.format(config.config_dic['branch'], git_info['branch']))
-            call('git -C {} pull'.format(git_info['branch']))
+            call('git -C {} checkout {}'.format(config.config_dic['project_path'], git_info['branch']))
+        call('git -C {} pull'.format(git_info['branch']))
 
     print '更新代码完成!'
     print '开始打包...'
@@ -52,7 +51,7 @@ if __name__ == "__main__":
             path = cp_info['path']
             if not os.path.exists(path):
                 os.mkdir(path)
-            call('cp ' + build_res[2] + ' ' + path)
+            shutil.copy(build_res[2], path)
             print '复制到 {}'.format(path)
         
         fir_info = config.config_dic['upload_to_fir']

@@ -11,6 +11,7 @@ build ipa
 """
 
 import os
+import shutil
 from call_cmd import call
 
 import config
@@ -22,7 +23,7 @@ def build_ipa(target=None):
     archive_path = config.config_dic['builds_path'] + scheme_name + '.xcarchive'
 
     archive_cmd = "xcodebuild archive -workspace {} -scheme {} -archivePath {} ONLY_ACTIVE_ARCH=NO TARGETED_DEVICE_FAMILY=1 -allowProvisioningUpdates".format(config.config_dic['project_path'] + config.config_dic['worspace_name'], scheme_name, archive_path)
-    log_file = config.config_dic['builds_path'] + config.config_dic['builg_log']
+    log_file = config.config_dic['log_path'] + config.config_dic['builg_log']
     file = open(log_file, 'w+')
     res = call(archive_cmd, file)
 
@@ -68,7 +69,14 @@ def build_ipa(target=None):
     if res[0] != 0:
         return [1, None, None ]
 
-    ipa_path = config.config_dic["builds_path"] + scheme_name + '.ipa'
+    version = call('''/usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" {}'''.format(config.config_dic['project_path'] + build_info['info_plist']))[1]
+    build_version = call('''/usr/libexec/PlistBuddy -c "Print CFBundleVersion" {}'''.format(config.config_dic['project_path'] + build_info['info_plist']))[1]
+
+    ipa_name = '{}-{}-Build {}.ipa'.format(scheme_name, str.strip(version), str.strip(build_version))
+
+    ipa_path = config.config_dic["builds_path"] + ipa_name
+
+    shutil.move(config.config_dic['builds_path'] + scheme_name + '.ipa', ipa_path)
     
     if not os.path.exists(ipa_path):
         return [1, None, None ]
