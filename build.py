@@ -11,7 +11,9 @@ build progress
 """
 
 import os
+import sys
 import shutil
+from optparse import OptionParser
 from call_cmd import call
 import config
 import build_ipa
@@ -138,7 +140,33 @@ def build(build_target):
     print '打包完毕!'
 
 if __name__ == "__main__":
-    config.init('/Users/ciel/Documents/build.yaml')
-    build_info = build_if_need()
-    if build_info[0]:
-        build(build_info[1])
+    usage = "usage: %prog [options] arg"
+
+    parser = OptionParser(usage)
+    parser.add_option("-c", "--config", dest='config', help='config file path')
+    parser.add_option("-a", "--auto", dest='auto', action='store_true', help='use auto mode, defalut False, you must set target option with valid value when defalut value', default=False)
+    parser.add_option("-t", "--target", dest='target', help='build target, will be ignored when auto option is True')
+    (options, args) = parser.parse_args()
+    config_file = options.config
+    auto = options.auto
+    target = options.target
+
+    if not config:
+        print 'You must set a config file path!'
+        sys.exit(1)
+
+    if (not auto) and (not target):
+        print 'You must set a build target!'
+        sys.exit(1)
+    config.init(config_file)
+
+    try:
+        if auto:
+            build_info = build_if_need()
+            if build_info[0]:
+                build(build_info[1])
+        else:
+            build(target)
+    except:
+        sys.exit(0)
+
