@@ -79,6 +79,9 @@ def build(build_target):
     last_try_file = config.config_dic['log_path'] + 'last_try_build.txt'
     last_build_file = config.config_dic['log_path'] + 'last_build.txt'
 
+    with open(last_build_file) as f:
+        last_build_commit = f.read()
+
     current_commit = call('''git -C {} log --format="%H" -n 1'''.format(config.config_dic['project_path']))[1]
 
     with open(last_try_file, 'w') as f:
@@ -118,7 +121,7 @@ def build(build_target):
         if mail_info['enable']:
             print '发送 email...'
             if mail_info['send_filter_log']:
-                log = filter_log.msg_with_intall_info('782d124', build_target)
+                log = filter_log.msg_with_intall_info(last_build_commit, build_target)
                 mail.send_success_msg(log, build_target)
             else:
                 mail.send_success_msg("打包成功!", build_target)
@@ -129,7 +132,7 @@ def build(build_target):
             print '发送钉钉消息...'
             tokens = ding_info['tokens']
             if ding_info['send_filter_log']:
-                log = filter_log.msg_with_intall_info('782d124', build_target)
+                log = filter_log.msg_with_intall_info(last_build_commit, build_target)
                 dingtalk_bot.sendMessage(log, tokens)
             else:
                 dingtalk_bot.sendMessage('打包成功!', tokens)
