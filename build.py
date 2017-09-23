@@ -46,9 +46,9 @@ def build_if_need():
         with open(last_build_file, 'w') as f:
             f.write('0')
 
-    with open(last_try_file) as f:
+    with open(last_try_file, 'r') as f:
         last_try_commit = f.read()
-    with open(last_build_file) as f:
+    with open(last_build_file, 'r') as f:
         last_build_commit = f.read()
 
     if last_try_commit == current_commit:
@@ -79,7 +79,15 @@ def build(build_target):
     last_try_file = config.config_dic['log_path'] + 'last_try_build.txt'
     last_build_file = config.config_dic['log_path'] + 'last_build.txt'
 
-    with open(last_build_file) as f:
+    if not os.path.exists(last_try_file):
+        with open(last_try_file, 'w') as f:
+            f.write('0')
+
+    if not os.path.exists(last_build_file):
+        with open(last_build_file, 'w') as f:
+            f.write('0')
+
+    with open(last_build_file, 'r') as f:
         last_build_commit = f.read()
 
     current_commit = call('''git -C {} log --format="%H" -n 1'''.format(config.config_dic['project_path']))[1]
@@ -163,13 +171,13 @@ if __name__ == "__main__":
         sys.exit(1)
     config.init(config_file)
 
-    try:
-        if auto:
-            build_info = build_if_need()
-            if build_info[0]:
-                build(build_info[1])
-        else:
-            build(target)
-    except:
-        sys.exit(0)
+    if auto:
+        build_info = build_if_need()
+        if build_info[0]:
+            build(build_info[1])
+    else:
+        build(target)
+    # try:
+    # except:
+    #     sys.exit(0)
 
