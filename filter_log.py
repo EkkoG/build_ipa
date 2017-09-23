@@ -29,7 +29,7 @@ def filter_log(last_commit):
         if line.startswith(prefix):
             log_has_prefix.append(line)
 
-    if not log_has_prefix[1]:
+    if log_has_prefix.count == 0:
         return None
 
     log_file = '{}log.txt'.format(config.config_dic['builds_path'])
