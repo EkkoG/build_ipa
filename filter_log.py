@@ -10,12 +10,15 @@
 filter git log
 """
 
+import os
 from call_cmd import call, runPipe
 import config
-import time
-import os
 
 def filter_log(last_commit):
+    commit_valid = call('git cat-file -e ' + last_commit)[1]
+    if commit_valid != '0':
+        return ''
+
     git_logs_cmd = '''git -C {} log --pretty=\"%s\" {}..HEAD'''.format(config.config_dic['project_path'], last_commit)
     logs = call(git_logs_cmd)
 
