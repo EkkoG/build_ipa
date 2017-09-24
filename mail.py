@@ -24,7 +24,7 @@ def send(text, subject=None, cc=None, toAdd=None, log_file=None):
     passwd = mail_info.get('password')
 
     if not (server and user and passwd):
-        print ('Invalid login info, exit!')
+        print('Invalid login info, exit!')
         return
 
     mail = Mail(server, port=sslPort, username=user, password=passwd,

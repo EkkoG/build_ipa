@@ -23,8 +23,8 @@ def read_config(path=None):
     """ read config from a file. """
     assert path != None, "file path cannot be none!"
 
-    stream = file(path, 'r')
-    return yaml.load(stream)
+    with open(path, 'r') as stream:
+        return yaml.load(stream)
 
 def valid_config(config=None):
     workspace_file_path = '{}{}'.format(config['project_path'], config['worspace_name'])

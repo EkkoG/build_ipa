@@ -18,7 +18,7 @@ def call(cmd, output=PIPE):
     args = shlex.split(cmd)
     p = subprocess.Popen(args, stdin=None, stdout=output, stderr=output)
     out, err = p.communicate()
-    return (p.returncode, out, err)
+    return (p.returncode, str.strip(out.decode('utf-8')), str.strip(err.decode('utf-8')))
 
 def runPipe(cmds):
     try: 
@@ -30,10 +30,10 @@ def runPipe(cmds):
         stdout, stderr = p.communicate()
         p.wait()
         returncode = p.returncode
-    except Exception, e:
+    except Exception as e:
         stderr = str(e)
         returncode = -1
     if returncode == 0:
-        return (True, stdout)
+        return (True, str.strip(stdout.decode('utf-8')))
     else:
-        return (False, stderr)
+        return (False, str.strip(stderr.decode('utf-8')))

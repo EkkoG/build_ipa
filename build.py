@@ -25,13 +25,13 @@ import dingtalk_bot
 
 def build_if_need():
     git_info = config.config_dic['git']
-    print 'Pulling latest code...'
+    print('Pulling latest code...')
     if git_info['pull_before_build']:
         if git_info['branch']:
             call('git -C {} checkout {}'.format(config.config_dic['project_path'], git_info['branch']))
         call('git -C {} pull'.format(git_info['branch']))
 
-    print 'Pull code complete!'
+    print('Pull code complete!')
 
     current_commit = call('''git -C {} log --format="%H" -n 1'''.format(config.config_dic['project_path']))[1]
 
@@ -52,7 +52,7 @@ def build_if_need():
         last_build_commit = f.read()
 
     if last_try_commit == current_commit:
-        print 'Build have tried, exit!'
+        print('Build have tried, exit!')
         return (False, None)
 
     commit_msg = call('''git log --format="%s" -n 1''')[1]
@@ -64,15 +64,15 @@ def build_if_need():
             break
 
     if not build_target:
-        print 'No build identifier, exit!'
+        print('No build identifier, exit!')
         return (False, None)
     
     if last_build_commit == current_commit:
-        print 'This build has been builded, exit!'
+        print('This build has been builded, exit!')
         return (False, None)
 
-    print 'Build identifier detect, build start...'
-    print 'Build info {}'.format(config.config_dic['build'][build_target])
+    print('Build identifier detect, build start...')
+    print('Build info {}'.format(config.config_dic['build'][build_target]))
     return (True, build_target)
 
 def build(build_target):
@@ -96,59 +96,59 @@ def build(build_target):
         f.write(current_commit)
 
     build_info = config.config_dic['build'][build_target]
-    print 'Building...'
+    print('Building...')
     build_res = build_ipa.build_ipa(build_target)
     if build_res[0] != 0:
-        print 'Build failure!'
+        print('Build failure!')
         failture_mail_info = config.config_dic['email_after_failure']
         if failture_mail_info['enable']:
             mail.send_failture_msg('Build failure!', build_target)
     else:
-        print 'Build success!'
+        print('Build success!')
         cp_info = config.config_dic['copy_to']
         if cp_info['enable']:
             path = cp_info['path']
             if not os.path.exists(path):
                 os.mkdir(path)
             shutil.copy(build_res[2], path)
-            print 'Copy to {}'.format(path)
+            print('Copy to {}'.format(path))
         
         fir_info = config.config_dic['upload_to_fir']
         if  fir_info['enable']:
-            print 'Upload to fir.im...'
+            print('Upload to fir.im...')
             fir.upload(build_res[2], fir_info['token'])
-            print 'Upload complete!'
+            print('Upload complete!')
 
         bugly_info = config.config_dic['bugly']
         if bugly_info['enable']:
-            print 'Upload symbol file to bugly...'
+            print('Upload symbol file to bugly...')
             bugly.upload(build_res[1], build_info)
-            print 'Upload complete!'
+            print('Upload complete!')
 
         mail_info = config.config_dic['email_after_build']
         if mail_info['enable']:
-            print 'Send email...'
+            print('Send email...')
             if mail_info['send_filter_log']:
                 log = filter_log.msg_with_intall_info(last_build_commit, build_target)
                 mail.send_success_msg(log, build_target)
             else:
                 mail.send_success_msg("Build success!", build_target)
-            print 'Send complete!'
+            print('Send complete!')
         
         ding_info = config.config_dic['send_ding_msg_after_build']
         if ding_info['enable']:
-            print 'Send dingtalk message...'
+            print('Send dingtalk message...')
             tokens = ding_info['tokens']
             if ding_info['send_filter_log']:
                 log = filter_log.msg_with_intall_info(last_build_commit, build_target)
                 dingtalk_bot.sendMessage(log, tokens)
             else:
                 dingtalk_bot.sendMessage('打包成功!', tokens)
-            print 'Send complete!'
+            print('Send complete!')
 
     with open(last_build_file, 'w') as f:
         f.write(current_commit)
-    print 'Build complete!'
+    print('Build complete!')
 
 if __name__ == "__main__":
     usage = "usage: %prog [options] arg"
@@ -163,11 +163,11 @@ if __name__ == "__main__":
     target = options.target
 
     if not config:
-        print 'You must set a config file path!'
+        print('You must set a config file path!')
         sys.exit(1)
 
     if (not auto) and (not target):
-        print 'You must set a build target!'
+        print('You must set a build target!')
         sys.exit(1)
     config.init(config_file)
 
