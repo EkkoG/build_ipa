@@ -33,7 +33,7 @@ def filter_log(last_commit):
             log_has_prefix.append(line)
 
     if log_has_prefix.count == 0:
-        return None
+        return ''
 
     log_file = '{}log.txt'.format(config.config_dic['builds_path'])
 
