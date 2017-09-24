@@ -100,7 +100,7 @@ def build(build_target):
     build_res = build_ipa.build_ipa(build_target)
     if build_res[0] != 0:
         print 'Build failure!'
-        failture_mail_info = config.config_dic['email_after_failture']
+        failture_mail_info = config.config_dic['email_after_failure']
         if failture_mail_info['enable']:
             mail.send_failture_msg('Build failure!', build_target)
     else:

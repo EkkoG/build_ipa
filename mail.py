@@ -51,7 +51,7 @@ def send_success_msg(text, build):
     send(text, get_subject(build), to_user_info['send_to'], to_user_info['cc_to'])
 
 def send_failture_msg(text, build):
-    to_user_info = config.config_dic['email_after_failture']
+    to_user_info = config.config_dic['email_after_failure']
     if not to_user_info['enable']:
         return
     build_log = config.config_dic['log_path'] + config.config_dic['builg_log']
