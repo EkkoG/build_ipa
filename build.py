@@ -25,13 +25,13 @@ import dingtalk_bot
 
 def build_if_need():
     git_info = config.config_dic['git']
-    print '更新代码...'
+    print 'Pulling latest code...'
     if git_info['pull_before_build']:
         if git_info['branch']:
             call('git -C {} checkout {}'.format(config.config_dic['project_path'], git_info['branch']))
         call('git -C {} pull'.format(git_info['branch']))
 
-    print '更新代码完成!'
+    print 'Pull code complete!'
 
     current_commit = call('''git -C {} log --format="%H" -n 1'''.format(config.config_dic['project_path']))[1]
 
@@ -52,7 +52,7 @@ def build_if_need():
         last_build_commit = f.read()
 
     if last_try_commit == current_commit:
-        print '已经尝试过打包，不再打包！'
+        print 'Build have tried, exit!'
         return (False, None)
 
     commit_msg = call('''git log --format="%s" -n 1''')[1]
@@ -64,15 +64,15 @@ def build_if_need():
             break
 
     if not build_target:
-        print '最新的 commit 中不包含任何打包标识，不打包！'
+        print 'No build identifier, exit!'
         return (False, None)
     
     if last_build_commit == current_commit:
-        print '此 build 已打包，不再打包'
+        print 'This build has been builded, exit!'
         return (False, None)
 
-    print '发现新的 build，开始打包！'
-    print '打包信息 {}'.format(config.config_dic['build'][build_target])
+    print 'Build identifier detect, build start...'
+    print 'Build info {}'.format(config.config_dic['build'][build_target])
     return (True, build_target)
 
 def build(build_target):
@@ -96,59 +96,59 @@ def build(build_target):
         f.write(current_commit)
 
     build_info = config.config_dic['build'][build_target]
-    print '开始打包...'
+    print 'Building...'
     build_res = build_ipa.build_ipa(build_target)
     if build_res[0] != 0:
-        print '打包失败!'
+        print 'Build failure!'
         failture_mail_info = config.config_dic['email_after_failture']
         if failture_mail_info['enable']:
-            mail.send_failture_msg('打包失败!', build_target)
+            mail.send_failture_msg('Build failure!', build_target)
     else:
-        print '打包成功!'
+        print 'Build success!'
         cp_info = config.config_dic['copy_to']
         if cp_info['enable']:
             path = cp_info['path']
             if not os.path.exists(path):
                 os.mkdir(path)
             shutil.copy(build_res[2], path)
-            print '复制到 {}'.format(path)
+            print 'Copy to {}'.format(path)
         
         fir_info = config.config_dic['upload_to_fir']
         if  fir_info['enable']:
-            print '开始上传到 fir.im...'
+            print 'Upload to fir.im...'
             fir.upload(build_res[2], fir_info['token'])
-            print '上传完成!'
+            print 'Upload complete!'
 
         bugly_info = config.config_dic['bugly']
         if bugly_info['enable']:
-            print '开始上传符号文件...'
+            print 'Upload symbol file to bugly...'
             bugly.upload(build_res[1], build_info)
-            print '上传成功!'
+            print 'Upload complete!'
 
         mail_info = config.config_dic['email_after_build']
         if mail_info['enable']:
-            print '发送 email...'
+            print 'Send email...'
             if mail_info['send_filter_log']:
                 log = filter_log.msg_with_intall_info(last_build_commit, build_target)
                 mail.send_success_msg(log, build_target)
             else:
-                mail.send_success_msg("打包成功!", build_target)
-            print '发送完成!'
+                mail.send_success_msg("Build success!", build_target)
+            print 'Send complete!'
         
         ding_info = config.config_dic['send_ding_msg_after_build']
         if ding_info['enable']:
-            print '发送钉钉消息...'
+            print 'Send dingtalk message...'
             tokens = ding_info['tokens']
             if ding_info['send_filter_log']:
                 log = filter_log.msg_with_intall_info(last_build_commit, build_target)
                 dingtalk_bot.sendMessage(log, tokens)
             else:
                 dingtalk_bot.sendMessage('打包成功!', tokens)
-            print '发送完成!'
+            print 'Send complete!'
 
     with open(last_build_file, 'w') as f:
         f.write(current_commit)
-    print '打包完毕!'
+    print 'Build complete!'
 
 if __name__ == "__main__":
     usage = "usage: %prog [options] arg"

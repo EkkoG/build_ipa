@@ -24,7 +24,7 @@ def send(text, subject=None, cc=None, toAdd=None, log_file=None):
     passwd = mail_info.get('password')
 
     if not (server and user and passwd):
-        print ('incomplete login info, exit now')
+        print ('Invalid login info, exit!')
         return
 
     mail = Mail(server, port=sslPort, username=user, password=passwd,
@@ -55,7 +55,7 @@ def send_failture_msg(text, build):
     if not to_user_info['enable']:
         return
     build_log = config.config_dic['log_path'] + config.config_dic['builg_log']
-    send("打包失败!", get_subject(build), to_user_info['send_to'], to_user_info['cc_to'], build_log)
+    send("Build failure!", get_subject(build), to_user_info['send_to'], to_user_info['cc_to'], build_log)
 
 def get_subject(build):
     build_info = config.config_dic['build'][build]
