@@ -19,5 +19,5 @@ def upload(archive=None, build_info=None):
     dSYM_path = "{}/dSYMs/{}.app.dSYM".format(archive, build_info['scheme'])
     version = call('''/usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" {}'''.format(config.config_dic['project_path'] + build_info['info_plist']))[1]
 
-    cmd = "java -jar {} -i {} -u -id {} -key {} -package {} -version {}".format(bugly_info['jar_file'], dSYM_path, build_info['bugly_id'], build_info['bugly_key'], build_info['bundle_id'], version)
+    cmd = "java -jar {} -i {} -u -id {} -key {} -package {} -version {}".format(bugly_info['jar_file'], dSYM_path, build_info['bugly_id'], build_info['bugly_key'], build_info['bundle_id'], str.strip(version))
     return call(cmd)
