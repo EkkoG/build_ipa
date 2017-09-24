@@ -18,7 +18,11 @@ def call(cmd, output=PIPE):
     args = shlex.split(cmd)
     p = subprocess.Popen(args, stdin=None, stdout=output, stderr=output)
     out, err = p.communicate()
-    return (p.returncode, str.strip(out.decode('utf-8')), str.strip(err.decode('utf-8')))
+    if out:
+        out = str.strip(out.decode('utf-8'))
+    if err:
+        err = str.strip(err.decode('utf-8'))
+    return (p.returncode, out, err)
 
 def runPipe(cmds):
     try: 
