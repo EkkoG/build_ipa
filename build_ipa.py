@@ -76,7 +76,7 @@ def build_ipa(target=None):
     version = call('''/usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" {}'''.format(config.config_dic['project_path'] + build_info['info_plist']))[1]
     build_version = call('''/usr/libexec/PlistBuddy -c "Print CFBundleVersion" {}'''.format(config.config_dic['project_path'] + build_info['info_plist']))[1]
 
-    ipa_name = '{}-{}-Build {}.ipa'.format(scheme_name, str.strip(version), str.strip(build_version))
+    ipa_name = '{}-{}-Build-{}.ipa'.format(scheme_name, str.strip(version), str.strip(build_version))
 
     ipa_path = config.config_dic["builds_path"] + ipa_name
 

@@ -13,5 +13,5 @@ upload to fir
 from call_cmd import call
 
 def upload(fir_path=None, ipa=None, token=None):
-    uplaod_cmd = "{} p  {} -T {}".format(fir_path, ipa, token)
-    return call(uplaod_cmd)
+    upload_cmd = "{} p  {} -T {}".format(fir_path, ipa, token)
+    return call(upload_cmd, None)
