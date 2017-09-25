@@ -175,3 +175,46 @@ It's recomment use auto mode with launchctl, there has two benifit
 1. launchctl environment can aceess login keychain, THIS IS A HUGE BENIFIT, you can save many time deal the cetificate issue.
 2. launchctl run one instance at a time, you do not need warry about to many install run at same time.
 
+There has a launchctl example plist file
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+<key>EnvironmentVariables</key>
+<dict>
+<key>PATH</key>
+<string>/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin</string>
+<key>PYTHONIOENCODING</key>
+<string>UTF-8</string>
+</dict>
+<key>Label</key>
+<string>com.cielpy.ipa</string>
+	<key>ProgramArguments</key>
+	<array>
+        <string>/usr/local/bin/python3</string>
+        <string>path/to/build.py</string>
+        <string>-a</string>
+        <string>-c</string>
+        <string>path/to/build.yaml</string>
+	</array>
+<key>RunAtLoad</key>
+<true/>
+<key>StartInterval</key>
+<integer>60</integer>
+<key>StandardErrorPath</key>
+<string>/tmp/AlTest1.err</string>
+<key>StandardOutPath</key>
+<string>/tmp/AlTest1.out</string>
+</dict>
+</plist>
+```
+
+Move it to `~/Library/LaunchAgents/` and run this command:
+
+```
+launchctl load ~/Library/LaunchAgents/com.cielpy.build_ipa.plist
+```
+
+Python script will run every 60 second, you change the parameters as you like.
