@@ -122,7 +122,6 @@ email_after_build:
   send_filter_log: true
   # Mail receiver
   send_to: 
-    # - lifanghao@dasheng.tv
     - send_to@example.com
   # Mail cc to
   cc_to: 
