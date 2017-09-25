@@ -160,7 +160,7 @@ Usage example
 path/to/python3 -c path/to/config -t 'dev'
 ```
 
-###WARMING!
+### WARMING!
 
 It's recomment use auto mode with launchctl, there has two benifit
 
