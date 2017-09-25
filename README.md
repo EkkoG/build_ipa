@@ -218,3 +218,5 @@ launchctl load ~/Library/LaunchAgents/com.cielpy.build_ipa.plist
 ```
 
 Python script will run every 60 second, you change the parameters as you like.
+
+After these config, you can commit with message `BUILDIPA`(set in build info), launchctl will run script automatically to build IPA and upload to third party platform.
