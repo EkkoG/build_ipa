@@ -30,34 +30,38 @@ def build_ipa(target=None):
     if res[0] != 0:
         return (1, None, None)
 
+    sign_certificate = 'iPhone Distribution'
+    if build_info['export_mothod'] == 'development':
+        sign_certificate = 'iPhone Developer'
+
     export_plist_template = """
-    <?xml version="1.0" encoding="UTF-8"?>
-    <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-    <plist version="1.0">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>compileBitcode</key>
+    <false/>
+    <key>method</key>
+    <string>{}</string>
+    <key>provisioningProfiles</key>
     <dict>
-        <key>compileBitcode</key>
-        <false/>
-        <key>method</key>
+        <key>{}</key>
         <string>{}</string>
-        <key>provisioningProfiles</key>
-        <dict>
-            <key>{}</key>
-            <string>{}</string>
-        </dict>
-        <key>signingCertificate</key>
-        <string>iPhone Developer</string>
-        <key>signingStyle</key>
-        <string>manual</string>
-        <key>stripSwiftSymbols</key>
-        <true/>
-        <key>teamID</key>
-        <string>{}</string>
-        <key>thinning</key>
-        <string>&lt;none&gt;</string>
     </dict>
-    </plist>
+    <key>signingCertificate</key>
+    <string>{}</string>
+    <key>signingStyle</key>
+    <string>manual</string>
+    <key>stripSwiftSymbols</key>
+    <true/>
+    <key>teamID</key>
+    <string>{}</string>
+    <key>thinning</key>
+    <string>&lt;none&gt;</string>
+</dict>
+</plist>
     """
-    export_plist = export_plist_template.format(build_info['export_mothod'], build_info['bundle_id'], build_info['provisioning_profile'], build_info['team_id'])
+    export_plist = export_plist_template.format(build_info['export_mothod'], build_info['bundle_id'], build_info['provisioning_profile'], sign_certificate, build_info['team_id'])
     export_plist_path = config.config_dic["builds_path"] + "export.plist"
 
     with open(export_plist_path, 'w') as f:
