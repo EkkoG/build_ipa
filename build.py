@@ -118,7 +118,7 @@ def build(build_target, send_msg=True):
         fir_info = config.config_dic['upload_to_fir']
         if  fir_info['enable']:
             print('Upload to fir.im...')
-            fir.upload(build_res[2], fir_info['token'])
+            fir.upload(fir_info['path'], build_res[2], fir_info['token'])
             print('Upload complete!')
 
         bugly_info = config.config_dic['bugly']
