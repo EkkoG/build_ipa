@@ -151,6 +151,7 @@ def build(build_target):
     print('Build complete!')
 
 if __name__ == "__main__":
+    print('-------------------------- Launched Script --------------------------')
     usage = "usage: %prog [options] arg"
 
     parser = OptionParser(usage)

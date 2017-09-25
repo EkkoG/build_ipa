@@ -10,8 +10,10 @@
 config service
 """
 
-import yaml
 import os
+import io
+import codecs
+import yaml
 
 def init(file_path=None):
     global config_dic
@@ -23,7 +25,7 @@ def read_config(path=None):
     """ read config from a file. """
     assert path != None, "file path cannot be none!"
 
-    with open(path, 'r') as stream:
+    with codecs.open(path, 'r', 'UTF-8') as stream:
         return yaml.load(stream)
 
 def valid_config(config=None):
