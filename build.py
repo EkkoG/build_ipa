@@ -77,7 +77,7 @@ def build_if_need():
     print('Build info {}'.format(config.config_dic['build'][build_target]))
     return (True, build_target)
 
-def build(build_target):
+def build(build_target, send_msg=True):
     last_try_file = config.config_dic['log_path'] + 'last_try_build.txt'
     last_build_file = config.config_dic['log_path'] + 'last_build.txt'
 
@@ -127,26 +127,27 @@ def build(build_target):
             bugly.upload(build_res[1], build_info)
             print('Upload complete!')
 
-        mail_info = config.config_dic['email_after_build']
-        if mail_info['enable']:
-            print('Send email...')
-            if mail_info['send_filter_log']:
-                log = filter_log.msg_with_intall_info(last_build_commit, build_target)
-                mail.send_success_msg(log, build_target)
-            else:
-                mail.send_success_msg("Build success!", build_target)
-            print('Send complete!')
-        
-        ding_info = config.config_dic['send_ding_msg_after_build']
-        if ding_info['enable']:
-            print('Send dingtalk message...')
-            tokens = ding_info['tokens']
-            if ding_info['send_filter_log']:
-                log = filter_log.msg_with_intall_info(last_build_commit, build_target)
-                dingtalk_bot.sendMessage(log, tokens)
-            else:
-                dingtalk_bot.sendMessage('打包成功!', tokens)
-            print('Send complete!')
+        if send_msg:
+            mail_info = config.config_dic['email_after_build']
+            if mail_info['enable']:
+                print('Send email...')
+                if mail_info['send_filter_log']:
+                    log = filter_log.msg_with_intall_info(last_build_commit, build_target)
+                    mail.send_success_msg(log, build_target)
+                else:
+                    mail.send_success_msg("Build success!", build_target)
+                print('Send complete!')
+            
+            ding_info = config.config_dic['send_ding_msg_after_build']
+            if ding_info['enable']:
+                print('Send dingtalk message...')
+                tokens = ding_info['tokens']
+                if ding_info['send_filter_log']:
+                    log = filter_log.msg_with_intall_info(last_build_commit, build_target)
+                    dingtalk_bot.sendMessage(log, tokens)
+                else:
+                    dingtalk_bot.sendMessage('打包成功!', tokens)
+                print('Send complete!')
 
     with open(last_build_file, 'w') as f:
         f.write(current_commit)
@@ -179,7 +180,7 @@ if __name__ == "__main__":
         if build_info[0]:
             build(build_info[1])
     else:
-        build(target)
+        build(target, send_msg=False)
     # try:
     # except:
     #     sys.exit(0)
