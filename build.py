@@ -29,11 +29,13 @@ def build_if_need():
     if git_info['pull_before_build']:
         if git_info['branch']:
             call('git -C {} checkout {}'.format(config.config_dic['project_path'], git_info['branch']))
-        call('git -C {} pull'.format(git_info['branch']))
+            call('git -C {} pull origin {}'.format(config.config_dic['project_path'], git_info['branch']))
+        else:
+            call('git -C {} pull'.format(config.config_dic['project_path']))
 
     print('Pull code complete!')
 
-    current_commit = call('''git -C {} log --format="%H" -n 1'''.format(config.config_dic['project_path']))[1]
+    current_commit = call('''git -C {} --no-pager log --format="%H" -n 1'''.format(config.config_dic['project_path']))[1]
 
     last_try_file = config.config_dic['log_path'] + 'last_try_build.txt'
     last_build_file = config.config_dic['log_path'] + 'last_build.txt'
@@ -55,7 +57,7 @@ def build_if_need():
         print('Build have tried, exit!')
         return (False, None)
 
-    commit_msg = call('''git log --format="%s" -n 1''')[1]
+    commit_msg = call('''git -C {} --no-pager log --format="%s" -n 1'''.format(config.config_dic['project_path']))[1]
 
     build_target = None
     for key in config.config_dic['build']:

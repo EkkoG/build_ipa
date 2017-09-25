@@ -15,7 +15,7 @@ from call_cmd import call, runPipe
 import config
 
 def filter_log(last_commit):
-    commit_valid = call('git cat-file -e ' + last_commit)[1]
+    commit_valid = call('git -C {} cat-file -e '.format(config.config_dic['project_path']) + last_commit)[1]
     if commit_valid != '0':
         return ''
 
