@@ -17,7 +17,7 @@ import config
 def filter_log(last_commit):
     commit_valid = call('git -C {} cat-file -e '.format(config.config_dic['project_path']) + last_commit)[1]
     if commit_valid != '0':
-        return ''
+        return '无'
 
     git_logs_cmd = '''git -C {} log --pretty=\"%s\" {}..HEAD'''.format(config.config_dic['project_path'], last_commit)
     logs = call(git_logs_cmd)
@@ -33,7 +33,7 @@ def filter_log(last_commit):
             log_has_prefix.append(line)
 
     if log_has_prefix.count == 0:
-        return ''
+        return '无'
 
     log_file = '{}log.txt'.format(config.config_dic['builds_path'])
 
