@@ -25,6 +25,33 @@ This tool only support python3, and it has several platform tool dependency, you
 
 ### Usage
 
+First you should install the python dependencies
+
+```
+https://github.com/cielpy/build_ipa.git
+cd build_ipa
+[sudo]pip3 install -r requirements.txt
+```
+
+```
+Usage: build.py [options] arg
+
+Options:
+  -h, --help            show this help message and exit
+  -c CONFIG, --config=CONFIG
+                        config file path
+  -a, --auto            use auto mode, defalut False, you must set target
+                        option with valid value when defalut value
+  -t TARGET, --target=TARGET
+                        build target, will be ignored when auto option is True
+```
+
+Usage example
+
+```
+path/to/python3 -c path/to/config -t 'dev'
+```
+
 There is a config example, use YAML format
 
 ```
@@ -139,25 +166,6 @@ build:
     provisioning_profile: 'iOS Distribution Prod'
     # Identifier use to detect a build, must unique among all build info
     build_identifier: BUILDIPA_PROD
-```
-
-```
-Usage: build.py [options] arg
-
-Options:
-  -h, --help            show this help message and exit
-  -c CONFIG, --config=CONFIG
-                        config file path
-  -a, --auto            use auto mode, defalut False, you must set target
-                        option with valid value when defalut value
-  -t TARGET, --target=TARGET
-                        build target, will be ignored when auto option is True
-```
-
-Usage example
-
-```
-path/to/python3 -c path/to/config -t 'dev'
 ```
 
 ### WARMING!
