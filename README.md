@@ -49,7 +49,7 @@ Options:
 Usage example
 
 ```
-path/to/python3 -c path/to/config -t 'dev'
+path/to/python3 path/to/build.py -c path/to/config -t 'dev'
 ```
 
 There is a config example, use YAML format
