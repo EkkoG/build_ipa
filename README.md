@@ -178,35 +178,34 @@ There has a launchctl example plist file
 
 ```
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<dict>
-<key>EnvironmentVariables</key>
-<dict>
-<key>PATH</key>
-<string>/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin</string>
-<key>PYTHONIOENCODING</key>
-<string>UTF-8</string>
-</dict>
-<key>Label</key>
-<string>com.cielpy.ipa</string>
-	<key>ProgramArguments</key>
-	<array>
-        <string>/usr/local/bin/python3</string>
-        <string>path/to/build.py</string>
-        <string>-a</string>
-        <string>-c</string>
-        <string>path/to/build.yaml</string>
-	</array>
-<key>RunAtLoad</key>
-<true/>
-<key>StartInterval</key>
-<integer>60</integer>
-<key>StandardErrorPath</key>
-<string>/tmp/AlTest1.err</string>
-<key>StandardOutPath</key>
-<string>/tmp/AlTest1.out</string>
-</dict>
+    <dict>
+        <key>EnvironmentVariables</key>
+        <dict>
+            <key>PATH</key>
+            <string>/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin</string>
+            <key>PYTHONIOENCODING</key>
+            <string>UTF-8</string>
+        </dict>
+        <key>Label</key>
+        <string>com.cielpy.ipa</string>
+        <key>ProgramArguments</key>
+        <array>
+            <string>/usr/local/bin/python3</string>
+            <string>path/to/build.py</string>
+            <string>-a</string>
+            <string>-c</string>
+            <string>path/to/build.yaml</string>
+        </array>
+        <key>RunAtLoad</key>
+        <true />
+        <key>StartInterval</key>
+        <integer>60</integer>
+        <key>StandardErrorPath</key>
+        <string>/tmp/AlTest1.err</string>
+        <key>StandardOutPath</key>
+        <string>/tmp/AlTest1.out</string>
+    </dict>
 </plist>
 ```
 
