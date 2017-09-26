@@ -54,7 +54,7 @@ path/to/python3 path/to/build.py -c path/to/config -t 'dev'
 
 There is a config example, use YAML format
 
-```
+``` yaml
 # ===========================================
 # Build config file
 # ===========================================
@@ -176,7 +176,7 @@ It's recomment use auto mode with launchctl, there has two benifit
 
 There has a launchctl example plist file
 
-```
+``` xml
 <?xml version="1.0" encoding="UTF-8"?>
 <plist version="1.0">
     <dict>
