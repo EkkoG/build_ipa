@@ -12,6 +12,7 @@ build progress
 
 import os
 import sys
+import datetime
 import shutil
 from optparse import OptionParser
 from call_cmd import call
@@ -22,6 +23,7 @@ import mail
 import fir
 import bugly
 import dingtalk_bot
+import date_format
 
 def build_if_need():
     git_info = config.config_dic['git']
@@ -155,6 +157,8 @@ def build(build_target, send_msg=True):
 
 if __name__ == "__main__":
     print('-------------------------- Launched Script --------------------------')
+    start_time = datetime.datetime.now()
+    print('Start time {}'.format(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
     usage = "usage: %prog [options] arg"
 
     parser = OptionParser(usage)
@@ -181,6 +185,8 @@ if __name__ == "__main__":
             build(build_info[1])
     else:
         build(target, send_msg=False)
+    print('Finish time {}'.format(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
+    print('Total time {}'.format(date_format.strfdelta(datetime.datetime.now() - start_time, "%H hours %M mins %S seconds")))
     # try:
     # except:
     #     sys.exit(0)
