@@ -15,13 +15,22 @@ A build tool use automation build ipa and distrabution to test.
 
 ### Requirement
 
-- xcodebuild tool insatlled
+- Xcode 9
 - Python3
 - Git
 - fir gem
 - bugly jar file and Java installed
 
 This tool only support python3, and it has several platform tool dependency, you should install them manually.
+
+### Setup on a new machine
+
+1. Install Xcode 9
+2. Install python3
+3. Install Java runtime (download JDK and install)
+4. Install fir-cli
+5. Test manual mode
+6. Add launchctl task (if need)
 
 ### Usage
 
