@@ -27,6 +27,12 @@ import date_format
 
 def build_if_need():
     git_info = config.config_dic['git']
+    git_branches = call('git -C {} branch'.format(config.config_dic['project_path']))[1].splitlines()
+    branch = 'master'
+    for line in git_branches:
+        if line.startswith('*'):
+            branch = line.split()[1]
+
     if git_info['pull_before_build']:
         print('Pulling latest code...')
 
@@ -34,7 +40,7 @@ def build_if_need():
             call('git -C {} checkout {}'.format(config.config_dic['project_path'], git_info['branch']), None)
             call('git -C {} pull origin {}'.format(config.config_dic['project_path'], git_info['branch']), None)
         else:
-            call('git -C {} pull '.format(config.config_dic['project_path']), None)
+            call('git -C {} pull origin {}'.format(config.config_dic['project_path'], branch), None)
 
         print('Pull code complete!')
 
