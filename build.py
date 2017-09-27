@@ -30,10 +30,10 @@ def build_if_need():
     print('Pulling latest code...')
     if git_info['pull_before_build']:
         if git_info['branch']:
-            call('git -C {} checkout {}'.format(config.config_dic['project_path'], git_info['branch']))
-            call('git -C {} pull origin {}'.format(config.config_dic['project_path'], git_info['branch']))
+            call('git -C {} checkout {}'.format(config.config_dic['project_path'], git_info['branch']), None)
+            call('git -C {} pull origin {}'.format(config.config_dic['project_path'], git_info['branch']), None)
         else:
-            call('git -C {} pull'.format(config.config_dic['project_path']))
+            call('git -C {} pull '.format(config.config_dic['project_path']), None)
 
     print('Pull code complete!')
 
@@ -156,7 +156,7 @@ def build(build_target, send_msg=True):
     print('Build complete!')
 
 if __name__ == "__main__":
-    print('-------------------------- Launched Script --------------------------')
+    print('-------------------------- Launch Script --------------------------')
     start_time = datetime.datetime.now()
     print('Start time {}'.format(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
     usage = "usage: %prog [options] arg"
