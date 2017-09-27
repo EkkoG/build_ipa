@@ -27,15 +27,16 @@ import date_format
 
 def build_if_need():
     git_info = config.config_dic['git']
-    print('Pulling latest code...')
     if git_info['pull_before_build']:
+        print('Pulling latest code...')
+
         if git_info['branch']:
             call('git -C {} checkout {}'.format(config.config_dic['project_path'], git_info['branch']), None)
             call('git -C {} pull origin {}'.format(config.config_dic['project_path'], git_info['branch']), None)
         else:
             call('git -C {} pull '.format(config.config_dic['project_path']), None)
 
-    print('Pull code complete!')
+        print('Pull code complete!')
 
     current_commit = call('''git -C {} --no-pager log --format="%H" -n 1'''.format(config.config_dic['project_path']))[1]
 
