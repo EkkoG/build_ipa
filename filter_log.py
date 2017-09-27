@@ -59,5 +59,5 @@ def msg_with_intall_info(last_commit, build):
     build_info = config.config_dic['build'][build]
     log = filter_log(last_commit)
 
-    msg = '更新日志:' + '\n\n' + log + '\n' + '安装地址：' + build_info['download_url']
+    msg = '更新日志:' + '\n\n' + log + '\n\n' + '安装地址：' + build_info['download_url']
     return msg
