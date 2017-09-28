@@ -37,10 +37,10 @@ def build_if_need():
         print('Pulling latest code...')
 
         if git_info['branch']:
-            call('git -C {} checkout {}'.format(config.config_dic['project_path'], git_info['branch']), None)
-            call('git -C {} pull origin {}'.format(config.config_dic['project_path'], git_info['branch']), None)
+            call('git -C {} checkout {}'.format(config.config_dic['project_path'], git_info['branch']))
+            call('git -C {} pull origin {}'.format(config.config_dic['project_path'], git_info['branch']))
         else:
-            call('git -C {} pull origin {}'.format(config.config_dic['project_path'], branch), None)
+            call('git -C {} pull origin {}'.format(config.config_dic['project_path'], branch))
 
         print('Pull code complete!')
 
@@ -87,6 +87,7 @@ def build_if_need():
     return (True, build_target)
 
 def build(build_target, send_msg=True):
+    
     last_try_file = config.config_dic['log_path'] + 'last_try_build.txt'
     last_build_file = config.config_dic['log_path'] + 'last_build.txt'
 
