@@ -151,7 +151,7 @@ def build(build_target, send_msg=True):
             if ding_info['enable']:
                 print('Send dingtalk message...')
                 tokens = ding_info['tokens']
-                title = mail.get_subject(target)
+                title = mail.get_subject(build_target)
                 if ding_info['send_filter_log']:
                     log = title + '\n\n' + filter_log.msg_with_intall_info(last_build_commit, build_target)
                     dingtalk_bot.sendMessage(log, tokens)
