@@ -15,6 +15,7 @@ import shlex
 
 def call(cmd, output=PIPE):
     """ call a command string """
+    print(cmd)
     args = shlex.split(cmd)
     p = subprocess.Popen(args, stdin=None, stdout=output, stderr=output)
     out, err = p.communicate()
@@ -22,6 +23,7 @@ def call(cmd, output=PIPE):
         out = str.strip(out.decode('utf-8'))
     if err:
         err = str.strip(err.decode('utf-8'))
+    print('return code {}, output {}, error {}'.format(p.returncode, out, err))
     return (p.returncode, out, err)
 
 def runPipe(cmds):
