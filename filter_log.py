@@ -15,8 +15,8 @@ from call_cmd import call, runPipe
 import config
 
 def filter_log(last_commit):
-    commit_valid = call('git -C {} cat-file -e '.format(config.config_dic['project_path']) + last_commit)[1]
-    if commit_valid != '0':
+    commit_valid = call('git -C {} cat-file -e '.format(config.config_dic['project_path']) + last_commit)[0]
+    if commit_valid != 1:
         return '无'
 
     git_logs_cmd = '''git -C {} log --pretty=\"%s\" {}..HEAD'''.format(config.config_dic['project_path'], last_commit)
