@@ -10,8 +10,8 @@
 filter git log
 """
 
-import os
-from call_cmd import call, runPipe
+import codecs
+from call_cmd import call
 import config
 
 def filter_log(last_commit):
@@ -37,21 +37,21 @@ def filter_log(last_commit):
 
     log_file = '{}log.txt'.format(config.config_dic['builds_path'])
 
-    with open(log_file, 'w') as f:
+    with codecs.open(log_file, 'w', 'UTF-8') as f:
         for line in log_has_prefix:
             f.write('{}\n'.format(line))
 
-    with open(log_file, 'r+') as f:
+    with codecs.open(log_file, 'r+', 'UTF-8') as f:
         flip_cmd = "sed '1!G;h;$!d' " + log_file
         res = call(flip_cmd)
         f.write(res[1])
 
-    with open(log_file, 'r+') as f:
+    with codecs.open(log_file, 'r+', 'UTF-8') as f:
         add_num_cmd = """awk '{printf NR"."" "}1' """ + log_file
         res = call(add_num_cmd)
         f.write(res[1])
 
-    with open(log_file, 'r') as f:
+    with codecs.open(log_file, 'r', 'UTF-8') as f:
         return f.read()
 
 
