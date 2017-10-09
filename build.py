@@ -37,8 +37,12 @@ def build_if_need():
         print('Pulling latest code...')
 
         if git_info['branch']:
-            call('git -C {} checkout {}'.format(config.config_dic['project_path'], git_info['branch']))
-            call('git -C {} pull origin {}'.format(config.config_dic['project_path'], git_info['branch']))
+            if git_info['branch'] == branch:
+                call('git -C {} pull origin {}'.format(config.config_dic['project_path'], branch))
+            else:
+                call('git -C {} fetch origin {}'.format(config.config_dic['project_path'], git_info['branch']))
+                call('git -C {} checkout {}'.format(config.config_dic['project_path'], git_info['branch']))
+                call('git -C {} pull origin {}'.format(config.config_dic['project_path'], git_info['branch']))
         else:
             call('git -C {} pull origin {}'.format(config.config_dic['project_path'], branch))
 

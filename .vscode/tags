@@ -12,13 +12,13 @@ OptionParser	../build.py	/^from optparse import OptionParser$/;"	kind:namespace	
 OptionParser	../dingtalk_bot.py	/^from optparse import OptionParser$/;"	kind:namespace	line:14
 PIPE	../call_cmd.py	/^from subprocess import PIPE$/;"	kind:namespace	line:13
 Template	../date_format.py	/^from string import Template$/;"	kind:namespace	line:13
-auto	../build.py	/^    auto = options.auto$/;"	kind:variable	line:179
+auto	../build.py	/^    auto = options.auto$/;"	kind:variable	line:181
 bugly	../build.py	/^import bugly$/;"	kind:namespace	line:24
 bugly.py	../bugly.py	1;"	kind:file	line:1
-build	../build.py	/^def build(build_target, send_msg=True):$/;"	kind:function	line:89
+build	../build.py	/^def build(build_target, send_msg=True):$/;"	kind:function	line:91
 build.py	../build.py	1;"	kind:file	line:1
 build_if_need	../build.py	/^def build_if_need():$/;"	kind:function	line:28
-build_info	../build.py	/^        build_info = build_if_need()$/;"	kind:variable	line:192
+build_info	../build.py	/^        build_info = build_if_need()$/;"	kind:variable	line:194
 build_ipa	../build.py	/^import build_ipa$/;"	kind:namespace	line:20
 build_ipa	../build_ipa.py	/^def build_ipa(target=None):$/;"	kind:function	line:19
 build_ipa.py	../build_ipa.py	1;"	kind:file	line:1
@@ -26,18 +26,19 @@ call	../bugly.py	/^from call_cmd import call$/;"	kind:namespace	line:13
 call	../build.py	/^from call_cmd import call$/;"	kind:namespace	line:18
 call	../build_ipa.py	/^from call_cmd import call$/;"	kind:namespace	line:15
 call	../call_cmd.py	/^def call(cmd, output=PIPE):$/;"	kind:function	line:16
-call	../filter_log.py	/^from call_cmd import call, runPipe$/;"	kind:namespace	line:14
+call	../filter_log.py	/^from call_cmd import call$/;"	kind:namespace	line:14
 call	../fir.py	/^from call_cmd import call$/;"	kind:namespace	line:13
 call	../mail.py	/^from call_cmd import call$/;"	kind:namespace	line:17
 call_cmd.py	../call_cmd.py	1;"	kind:file	line:1
 codecs	../config.py	/^import codecs$/;"	kind:namespace	line:15
+codecs	../filter_log.py	/^import codecs$/;"	kind:namespace	line:13
 config	../bugly.py	/^import config$/;"	kind:namespace	line:14
 config	../build.py	/^import config$/;"	kind:namespace	line:19
 config	../build_ipa.py	/^import config$/;"	kind:namespace	line:17
 config	../filter_log.py	/^import config$/;"	kind:namespace	line:15
 config	../mail.py	/^import config$/;"	kind:namespace	line:16
 config.py	../config.py	1;"	kind:file	line:1
-config_file	../build.py	/^    config_file = options.config$/;"	kind:variable	line:178
+config_file	../build.py	/^    config_file = options.config$/;"	kind:variable	line:180
 date_format	../build.py	/^import date_format$/;"	kind:namespace	line:26
 date_format.py	../date_format.py	1;"	kind:file	line:1
 datetime	../build.py	/^import datetime$/;"	kind:namespace	line:15
@@ -64,13 +65,11 @@ msg_with_intall_info	../filter_log.py	/^def msg_with_intall_info(last_commit, bu
 os	../build.py	/^import os$/;"	kind:namespace	line:13
 os	../build_ipa.py	/^import os$/;"	kind:namespace	line:13
 os	../config.py	/^import os$/;"	kind:namespace	line:13
-os	../filter_log.py	/^import os$/;"	kind:namespace	line:13
-parser	../build.py	/^    parser = OptionParser(usage)$/;"	kind:variable	line:173
+parser	../build.py	/^    parser = OptionParser(usage)$/;"	kind:variable	line:175
 read_config	../config.py	/^def read_config(path=None):$/;"	kind:function	line:24
 requests	../dingtalk_bot.py	/^import requests$/;"	kind:namespace	line:13
 res	../build_ipa.py	/^    res = call(export_cmd, file)$/;"	kind:variable	line:71
 runPipe	../call_cmd.py	/^def runPipe(cmds):$/;"	kind:function	line:29
-runPipe	../filter_log.py	/^from call_cmd import call, runPipe$/;"	kind:namespace	line:14
 send	../mail.py	/^def send(text, subject=None, cc=None, toAdd=None, log_file=None):$/;"	kind:function	line:19
 sendMessage	../dingtalk_bot.py	/^def sendMessage(message, tokens):$/;"	kind:function	line:16
 send_failture_msg	../mail.py	/^def send_failture_msg(text, build):$/;"	kind:function	line:53
@@ -78,13 +77,13 @@ send_success_msg	../mail.py	/^def send_success_msg(text, build):$/;"	kind:functi
 shlex	../call_cmd.py	/^import shlex$/;"	kind:namespace	line:14
 shutil	../build.py	/^import shutil$/;"	kind:namespace	line:16
 shutil	../build_ipa.py	/^import shutil$/;"	kind:namespace	line:14
-start_time	../build.py	/^    start_time = datetime.datetime.now()$/;"	kind:variable	line:169
+start_time	../build.py	/^    start_time = datetime.datetime.now()$/;"	kind:variable	line:171
 strfdelta	../date_format.py	/^def strfdelta(tdelta, fmt):$/;"	kind:function	line:18
 subprocess	../call_cmd.py	/^import subprocess$/;"	kind:namespace	line:12
 sys	../build.py	/^import sys$/;"	kind:namespace	line:14
-target	../build.py	/^    target = options.target$/;"	kind:variable	line:180
+target	../build.py	/^    target = options.target$/;"	kind:variable	line:182
 upload	../bugly.py	/^def upload(archive=None, build_info=None):$/;"	kind:function	line:16
 upload	../fir.py	/^def upload(fir_path=None, ipa=None, token=None):$/;"	kind:function	line:15
-usage	../build.py	/^    usage = "usage: %prog [options] arg"$/;"	kind:variable	line:171
+usage	../build.py	/^    usage = "usage: %prog [options] arg"$/;"	kind:variable	line:173
 valid_config	../config.py	/^def valid_config(config=None):$/;"	kind:function	line:31
 yaml	../config.py	/^import yaml$/;"	kind:namespace	line:16
