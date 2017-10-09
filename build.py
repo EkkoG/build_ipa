@@ -15,7 +15,6 @@ import sys
 import datetime
 import shutil
 from optparse import OptionParser
-from call_cmd import call
 import config
 import build_ipa
 import filter_log
@@ -24,31 +23,32 @@ import fir
 import bugly
 import dingtalk_bot
 import date_format
+import git
 
 def build_if_need():
     git_info = config.config_dic['git']
-    git_branches = call('git -C {} branch'.format(config.config_dic['project_path']))[1].splitlines()
+
+    project_path = config.config_dic['project_path']
+
     branch = 'master'
-    for line in git_branches:
-        if line.startswith('*'):
-            branch = line.split()[1]
+    current_branch = git.get_current_branch(project_path)
+    if current_branch:
+        branch = current_branch
 
     if git_info['pull_before_build']:
         print('Pulling latest code...')
 
         if git_info['branch']:
             if git_info['branch'] == branch:
-                call('git -C {} pull origin {}'.format(config.config_dic['project_path'], branch))
+                git.pull(project_path, branch=branch)
             else:
-                call('git -C {} fetch origin {}'.format(config.config_dic['project_path'], git_info['branch']))
-                call('git -C {} checkout {}'.format(config.config_dic['project_path'], git_info['branch']))
-                call('git -C {} pull origin {}'.format(config.config_dic['project_path'], git_info['branch']))
+                git.checkout_and_pull(project_path, branch=git_info['branch'])
         else:
-            call('git -C {} pull origin {}'.format(config.config_dic['project_path'], branch))
+            git.pull(project_path, branch=branch)
 
         print('Pull code complete!')
 
-    current_commit = call('''git -C {} --no-pager log --format="%H" -n 1'''.format(config.config_dic['project_path']))[1]
+    current_commit = git.get_current_commit(project_path)
 
     last_try_file = config.config_dic['log_path'] + 'last_try_build.txt'
     last_build_file = config.config_dic['log_path'] + 'last_build.txt'
@@ -70,7 +70,7 @@ def build_if_need():
         print('Build have tried, exit!')
         return (False, None)
 
-    commit_msg = call('''git -C {} --no-pager log --format="%s" -n 1'''.format(config.config_dic['project_path']))[1]
+    commit_msg = git.get_latest_commit_msg(project_path)
 
     build_target = None
     for key in config.config_dic['build']:
@@ -106,7 +106,7 @@ def build(build_target, send_msg=True):
     with open(last_build_file, 'r') as f:
         last_build_commit = f.read()
 
-    current_commit = call('''git -C {} log --format="%H" -n 1'''.format(config.config_dic['project_path']))[1]
+    current_commit = git.get_current_commit(config.config_dic['project_path'])
 
     with open(last_try_file, 'w') as f:
         f.write(current_commit)
