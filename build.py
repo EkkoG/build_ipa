@@ -53,18 +53,16 @@ def build_if_need():
     last_try_file = config.config_dic['log_path'] + 'last_try_build.txt'
     last_build_file = config.config_dic['log_path'] + 'last_build.txt'
 
-    if not os.path.exists(last_try_file):
-        with open(last_try_file, 'w') as f:
-            f.write('0')
+    last_try_commit = '0'
+    last_build_commit = '0'
 
-    if not os.path.exists(last_build_file):
-        with open(last_build_file, 'w') as f:
-            f.write('0')
+    if os.path.exists(last_try_file):
+        with open(last_try_file, 'r') as f:
+            last_try_commit = f.read()
 
-    with open(last_try_file, 'r') as f:
-        last_try_commit = f.read()
-    with open(last_build_file, 'r') as f:
-        last_build_commit = f.read()
+    if os.path.exists(last_build_file):
+        with open(last_build_file, 'r') as f:
+            last_build_commit = f.read()
 
     if last_try_commit == current_commit:
         print('Build have tried, exit!')
@@ -90,27 +88,7 @@ def build_if_need():
     print('Build info {}'.format(config.config_dic['build'][build_target]))
     return (True, build_target)
 
-def build(build_target, send_msg=True):
-    
-    last_try_file = config.config_dic['log_path'] + 'last_try_build.txt'
-    last_build_file = config.config_dic['log_path'] + 'last_build.txt'
-
-    if not os.path.exists(last_try_file):
-        with open(last_try_file, 'w') as f:
-            f.write('0')
-
-    if not os.path.exists(last_build_file):
-        with open(last_build_file, 'w') as f:
-            f.write('0')
-
-    with open(last_build_file, 'r') as f:
-        last_build_commit = f.read()
-
-    current_commit = git.get_current_commit(config.config_dic['project_path'])
-
-    with open(last_try_file, 'w') as f:
-        f.write(current_commit)
-
+def build_and_upload(build_target):
     build_info = config.config_dic['build'][build_target]
     print('Building...')
     build_res = build_ipa.build_ipa(build_target)
@@ -140,6 +118,25 @@ def build(build_target, send_msg=True):
             print('Upload symbol file to bugly...')
             bugly.upload(build_res[1], build_info)
             print('Upload complete!')
+    return build_res
+
+def build(build_target, send_msg=True):
+    last_try_file = config.config_dic['log_path'] + 'last_try_build.txt'
+    last_build_file = config.config_dic['log_path'] + 'last_build.txt'
+
+    with open(last_build_file, 'r') as f:
+        last_build_commit = f.read()
+
+    current_commit = git.get_current_commit(config.config_dic['project_path'])
+
+    with open(last_try_file, 'w') as f:
+        f.write(current_commit)
+
+    build_res = build_and_upload(build_target)
+
+    if build_res[0] == 0:
+        with open(last_build_file, 'w') as f:
+            f.write(current_commit)
 
         if send_msg:
             mail_info = config.config_dic['email_after_build']
@@ -164,8 +161,6 @@ def build(build_target, send_msg=True):
                     dingtalk_bot.sendMessage(title + '\n\n' + '打包成功!', tokens)
                 print('Send complete!')
 
-    with open(last_build_file, 'w') as f:
-        f.write(current_commit)
     print('Build complete!')
 
 if __name__ == "__main__":
@@ -193,11 +188,11 @@ if __name__ == "__main__":
     config.init(config_file)
 
     if auto:
-        build_info = build_if_need()
-        if build_info[0]:
-            build(build_info[1])
+        build_if = build_if_need()
+        if build_if[0]:
+            build(build_if[1])
     else:
-        build(target, send_msg=False)
+        build_and_upload(target)
     print('Finish time {}'.format(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
     print('Total time {}'.format(date_format.strfdelta(datetime.datetime.now() - start_time, "%H hours %M mins %S seconds")))
     # try:
