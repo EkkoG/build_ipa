@@ -71,7 +71,7 @@ def build_ipa(target=None):
     res = call(export_cmd, file)
 
     if res[0] != 0:
-        return [1, None, None ]
+        return (1, None, None)
 
     version = call('''/usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" {}'''.format(config.config_dic['project_path'] + build_info['info_plist']))[1]
     build_version = call('''/usr/libexec/PlistBuddy -c "Print CFBundleVersion" {}'''.format(config.config_dic['project_path'] + build_info['info_plist']))[1]
@@ -83,10 +83,10 @@ def build_ipa(target=None):
     shutil.move(config.config_dic['builds_path'] + scheme_name + '.ipa', ipa_path)
     
     if not os.path.exists(ipa_path):
-        return [1, None, None ]
+        return (1, None, None)
 
     file.close
-    return [0, archive_path,  ipa_path]
+    return (0, archive_path,  ipa_path)
 
 if __name__ == "__main__":
     build_ipa()
