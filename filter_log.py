@@ -10,7 +10,6 @@
 filter git log
 """
 
-import codecs
 from call_cmd import call
 import config
 
@@ -19,7 +18,7 @@ def filter_log(last_commit):
     if commit_valid != 0:
         return '无'
 
-    git_logs_cmd = '''git -C {} log --pretty=\"%s\" {}..HEAD'''.format(config.config_dic['project_path'], last_commit)
+    git_logs_cmd = '''git -C {} log --pretty=\"%s\" {}..HEAD --reverse'''.format(config.config_dic['project_path'], last_commit)
     logs = call(git_logs_cmd)
 
     log_has_prefix = []
@@ -35,25 +34,15 @@ def filter_log(last_commit):
     if not log_has_prefix:
         return '无'
 
-    log_file = '{}log.txt'.format(config.config_dic['builds_path'])
-
-    with codecs.open(log_file, 'w', 'UTF-8') as f:
-        for line in log_has_prefix:
-            f.write('{}\n'.format(line))
-
-    with codecs.open(log_file, 'r+', 'UTF-8') as f:
-        flip_cmd = "sed '1!G;h;$!d' " + log_file
-        res = call(flip_cmd)
-        f.write(res[1])
-
-    with codecs.open(log_file, 'r+', 'UTF-8') as f:
-        add_num_cmd = """awk '{printf NR"."" "}1' """ + log_file
-        res = call(add_num_cmd)
-        f.write(res[1])
-
-    with codecs.open(log_file, 'r', 'UTF-8') as f:
-        return f.read()
-
+    log_text = ''
+    i = 0
+    while i < len(log_has_prefix):
+        log_text += '{}.{}'.format(i + 1, log_has_prefix[i])
+        if i < len(log_has_prefix) - 1:
+            log_text += '\n'
+        i += 1
+                
+    return log_text
 
 def msg_with_intall_info(last_commit, build):
     build_info = config.config_dic['build'][build]
