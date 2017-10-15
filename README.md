@@ -202,6 +202,7 @@ There has a launchctl example plist file
         <array>
             <string>/usr/local/bin/python3</string>
             <string>path/to/build.py</string>
+            <string>-u</string>
             <string>-a</string>
             <string>-c</string>
             <string>path/to/build.yaml</string>
