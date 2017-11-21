@@ -26,12 +26,16 @@ def call(cmd, output=PIPE):
     print('return code {}, output {}, error {}'.format(p.returncode, out, err))
     return (p.returncode, out, err)
 
-def runPipe(cmds):
+def runPipe(cmds, output=PIPE):
     try: 
         p1 = subprocess.Popen(shlex.split(cmds[0]), stdin=None, stdout=PIPE, stderr=PIPE)
         prev = p1
         for cmd in cmds[1:]:
-            p = subprocess.Popen(shlex.split(cmd), stdin=prev.stdout, stdout=PIPE, stderr=PIPE)
+            if cmd == cmds[-1]:
+                p = subprocess.Popen(shlex.split(cmd), stdin=prev.stdout, stdout=output, stderr=PIPE)
+            else:
+                p = subprocess.Popen(shlex.split(cmd), stdin=prev.stdout, stdout=PIPE, stderr=PIPE)
+
             prev = p
         stdout, stderr = p.communicate()
         p.wait()
@@ -40,6 +44,12 @@ def runPipe(cmds):
         stderr = str(e)
         returncode = -1
     if returncode == 0:
-        return (True, str.strip(stdout.decode('utf-8')))
+        if stdout:
+            return (True, str.strip(stdout.decode('utf-8')))
+        else:
+            return (True, '')
     else:
-        return (False, str.strip(stderr.decode('utf-8')))
+        if stderr:
+            return (False, str.strip(stderr.decode('utf-8')))
+        else:
+            return (False, '')

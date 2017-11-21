@@ -26,18 +26,17 @@ build_ipa.py	../build_ipa.py	1;"	kind:file	line:1
 call	../bugly.py	/^from call_cmd import call$/;"	kind:namespace	line:13
 call	../build_ipa.py	/^from call_cmd import call$/;"	kind:namespace	line:15
 call	../call_cmd.py	/^def call(cmd, output=PIPE):$/;"	kind:function	line:16
-call	../filter_log.py	/^from call_cmd import call$/;"	kind:namespace	line:14
+call	../filter_log.py	/^from call_cmd import call$/;"	kind:namespace	line:13
 call	../fir.py	/^from call_cmd import call$/;"	kind:namespace	line:13
 call	../git.py	/^from call_cmd import call$/;"	kind:namespace	line:13
 call	../mail.py	/^from call_cmd import call$/;"	kind:namespace	line:17
 call_cmd.py	../call_cmd.py	1;"	kind:file	line:1
 checkout_and_pull	../git.py	/^def checkout_and_pull(project_path, repo='origin', branch='master'):$/;"	kind:function	line:25
 codecs	../config.py	/^import codecs$/;"	kind:namespace	line:15
-codecs	../filter_log.py	/^import codecs$/;"	kind:namespace	line:13
 config	../bugly.py	/^import config$/;"	kind:namespace	line:14
 config	../build.py	/^import config$/;"	kind:namespace	line:18
 config	../build_ipa.py	/^import config$/;"	kind:namespace	line:17
-config	../filter_log.py	/^import config$/;"	kind:namespace	line:15
+config	../filter_log.py	/^import config$/;"	kind:namespace	line:14
 config	../mail.py	/^import config$/;"	kind:namespace	line:16
 config.py	../config.py	1;"	kind:file	line:1
 config_file	../build.py	/^    config_file = options.config$/;"	kind:variable	line:177
@@ -51,7 +50,7 @@ export_cmd	../build_ipa.py	/^    export_cmd = "xcodebuild -exportArchive -archiv
 export_plist	../build_ipa.py	/^    export_plist = export_plist_template.format(build_info['export_mothod'], build_info['bundle_id'], build_info['provisioning_profile'], sign_certificate, build_info['team_id'])$/;"	kind:variable	line:64
 export_plist_path	../build_ipa.py	/^    export_plist_path = config.config_dic["builds_path"] + "export.plist"$/;"	kind:variable	line:65
 filter_log	../build.py	/^import filter_log$/;"	kind:namespace	line:20
-filter_log	../filter_log.py	/^def filter_log(last_commit):$/;"	kind:function	line:17
+filter_log	../filter_log.py	/^def filter_log(last_commit):$/;"	kind:function	line:16
 filter_log.py	../filter_log.py	1;"	kind:file	line:1
 fir	../build.py	/^import fir$/;"	kind:namespace	line:22
 fir.py	../fir.py	1;"	kind:file	line:1
@@ -68,7 +67,7 @@ ipa_path	../build_ipa.py	/^    ipa_path = config.config_dic["builds_path"] + ipa
 mail	../build.py	/^import mail$/;"	kind:namespace	line:21
 mail.py	../mail.py	1;"	kind:file	line:1
 make_path_valid	../config.py	/^def make_path_valid(config=None):$/;"	kind:function	line:35
-msg_with_intall_info	../filter_log.py	/^def msg_with_intall_info(last_commit, build):$/;"	kind:function	line:58
+msg_with_intall_info	../filter_log.py	/^def msg_with_intall_info(last_commit, build):$/;"	kind:function	line:47
 os	../build.py	/^import os$/;"	kind:namespace	line:13
 os	../build_ipa.py	/^import os$/;"	kind:namespace	line:13
 os	../config.py	/^import os$/;"	kind:namespace	line:13
