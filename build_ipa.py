@@ -34,6 +34,17 @@ def build_ipa(target=None):
     if build_info['export_mothod'] == 'development':
         sign_certificate = 'iPhone Developer'
 
+    provisioning_profile_string = """
+<key>{}</key>
+<string>{}</string>
+""".format(build_info['bundle_id'], build_info['provisioning_profile'])
+    extra_provisinging_profiles = build_info['extra_provisioning_profile']
+    for provisinging_profile in extra_provisinging_profiles:
+        provisioning_profile_string += """
+<key>{}</key>
+<string>{}</string>
+        """.format(provisinging_profile['bundle_id'], provisinging_profile['provisioning_profile'])
+
     export_plist_template = """
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -45,8 +56,7 @@ def build_ipa(target=None):
     <string>{}</string>
     <key>provisioningProfiles</key>
     <dict>
-        <key>{}</key>
-        <string>{}</string>
+        {}
     </dict>
     <key>signingCertificate</key>
     <string>{}</string>
@@ -61,7 +71,7 @@ def build_ipa(target=None):
 </dict>
 </plist>
     """
-    export_plist = export_plist_template.format(build_info['export_mothod'], build_info['bundle_id'], build_info['provisioning_profile'], sign_certificate, build_info['team_id'])
+    export_plist = export_plist_template.format(build_info['export_mothod'], provisioning_profile_string, sign_certificate, build_info['team_id'])
     export_plist_path = config.config_dic["builds_path"] + "export.plist"
 
     with open(export_plist_path, 'w') as f:
