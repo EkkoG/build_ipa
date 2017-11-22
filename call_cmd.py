@@ -37,19 +37,14 @@ def runPipe(cmds, output=PIPE):
                 p = subprocess.Popen(shlex.split(cmd), stdin=prev.stdout, stdout=PIPE, stderr=PIPE)
 
             prev = p
-        stdout, stderr = p.communicate()
+        out, err = p.communicate()
         p.wait()
         returncode = p.returncode
     except Exception as e:
-        stderr = str(e)
         returncode = -1
-    if returncode == 0:
-        if stdout:
-            return (True, str.strip(stdout.decode('utf-8')))
-        else:
-            return (True, '')
-    else:
-        if stderr:
-            return (False, str.strip(stderr.decode('utf-8')))
-        else:
-            return (False, '')
+    if out:
+        out = str.strip(out.decode('utf-8'))
+    if err:
+        err = str.strip(err.decode('utf-8'))
+    print('return code {}, output {}, error {}'.format(returncode, out, err))
+    return (returncode, out, err)
