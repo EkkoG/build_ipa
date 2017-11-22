@@ -38,12 +38,13 @@ def build_ipa(target=None):
 <key>{}</key>
 <string>{}</string>
 """.format(build_info['bundle_id'], build_info['provisioning_profile'])
-    extra_provisinging_profiles = build_info['extra_provisioning_profile']
-    for provisinging_profile in extra_provisinging_profiles:
-        provisioning_profile_string += """
-<key>{}</key>
-<string>{}</string>
-        """.format(provisinging_profile['bundle_id'], provisinging_profile['provisioning_profile'])
+
+    if build_info['extra_provisioning_profile']:
+        for provisinging_profile in build_info['extra_provisioning_profile']:
+            provisioning_profile_string += """
+    <key>{}</key>
+    <string>{}</string>
+            """.format(provisinging_profile['bundle_id'], provisinging_profile['provisioning_profile'])
 
     export_plist_template = """
 <?xml version="1.0" encoding="UTF-8"?>

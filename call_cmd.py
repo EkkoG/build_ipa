@@ -27,6 +27,15 @@ def call(cmd, output=PIPE):
     return (p.returncode, out, err)
 
 def runPipe(cmds, output=PIPE):
+    cmd_string = ''
+    for cmd in cmds:
+        if cmd != cmds[-1]:
+            cmd_string += cmd
+            cmd_string += ' | '
+        else:
+            cmd_string += cmd
+    print(cmd_string)
+
     try: 
         p1 = subprocess.Popen(shlex.split(cmds[0]), stdin=None, stdout=PIPE, stderr=PIPE)
         prev = p1
