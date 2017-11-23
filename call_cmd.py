@@ -29,11 +29,9 @@ def call(cmd, output=PIPE):
 def runPipe(cmds, output=PIPE):
     cmd_string = ''
     for cmd in cmds:
+        cmd_string += cmd
         if cmd != cmds[-1]:
-            cmd_string += cmd
             cmd_string += ' | '
-        else:
-            cmd_string += cmd
     print(cmd_string)
 
     try: 
