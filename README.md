@@ -159,8 +159,12 @@ build:
     scheme: Example
     bundle_id: com.example
     provisioning_profile: 'iOS Development Dev'
+    # Extra provisioning profile, use for project have extentions
+    extra_provisioning_profile: 
+      - bundle_id: com.example.extention
+        provisioning_profile: 'iOS Development Dev Extention'
     # Identifier use to detect a build, must unique among all build info
-    build_identifier: BUILDIPA
+    build_identifier: BUILDIPA_DEV
   dis: 
     info_plist: Example/Info.plist
     bugly_key: jlkjlkjaa-7c5c-41e3-b54f-8dabd4c4da2b
