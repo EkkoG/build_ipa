@@ -24,6 +24,7 @@ import bugly
 import dingtalk_bot
 import date_format
 import git
+import resign
 
 def build_if_need():
     git_info = config.config_dic['git']
@@ -92,6 +93,16 @@ def build_and_upload(build_target):
     build_info = config.config_dic['build'][build_target]
     print('Building...')
     build_res = build_ipa.build_ipa(build_target)
+
+    resign_info = build_info['resign']
+    if resign_info['enable']:
+        resign_res = resign.resign(build_res[2], build_info)
+        if resign_res[0] == 0:
+            build_res = (build_res[0], build_res[1], resign_res[1])
+        else:
+            build_res = (1, None, None)
+            return build_res
+
     if build_res[0] != 0:
         print('Build failure!')
         failture_mail_info = config.config_dic['email_after_failure']

@@ -163,6 +163,19 @@ build:
     extra_provisioning_profile: 
       - bundle_id: com.example.extention
         provisioning_profile: 'iOS Development Dev Extention'
+    resign:
+      enable: true
+      provisioning_profile: '/Users/xxx/Documents/xxx.mobileprovision'
+      certificate: 'iPhone Distribution xxx Net Co., Ltd.'
+      # Change app display nama
+      app_name: 
+      # Change bundle id, if not config, use provisioning profile's instead
+      bundle_id:
+      extentions:
+        # Extentsion's scheme
+        - scheme: xxx
+          provisioning_profile: '/Users/xxx/Documents/xxx.mobileprovision'
+          bundle_id:
     # Identifier use to detect a build, must unique among all build info
     build_identifier: BUILDIPA_DEV
   dis: 
