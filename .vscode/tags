@@ -12,13 +12,14 @@ OptionParser	../build.py	/^from optparse import OptionParser$/;"	kind:namespace	
 OptionParser	../dingtalk_bot.py	/^from optparse import OptionParser$/;"	kind:namespace	line:14
 PIPE	../call_cmd.py	/^from subprocess import PIPE$/;"	kind:namespace	line:13
 Template	../date_format.py	/^from string import Template$/;"	kind:namespace	line:13
-auto	../build.py	/^    auto = options.auto$/;"	kind:variable	line:178
+auto	../build.py	/^    auto = options.auto$/;"	kind:variable	line:189
 bugly	../build.py	/^import bugly$/;"	kind:namespace	line:23
 bugly.py	../bugly.py	1;"	kind:file	line:1
-build	../build.py	/^def build(build_target, send_msg=True):$/;"	kind:function	line:123
+build	../build.py	/^def build(build_target, send_msg=True):$/;"	kind:function	line:134
 build.py	../build.py	1;"	kind:file	line:1
-build_and_upload	../build.py	/^def build_and_upload(build_target):$/;"	kind:function	line:91
-build_if_need	../build.py	/^def build_if_need():$/;"	kind:function	line:28
+build_and_upload	../build.py	/^def build_and_upload(build_target):$/;"	kind:function	line:92
+build_if	../build.py	/^        build_if = build_if_need()$/;"	kind:variable	line:202
+build_if_need	../build.py	/^def build_if_need():$/;"	kind:function	line:29
 build_ipa	../build.py	/^import build_ipa$/;"	kind:namespace	line:19
 build_ipa	../build_ipa.py	/^def build_ipa(target=None):$/;"	kind:function	line:19
 build_ipa.py	../build_ipa.py	1;"	kind:file	line:1
@@ -29,6 +30,7 @@ call	../filter_log.py	/^from call_cmd import call$/;"	kind:namespace	line:13
 call	../fir.py	/^from call_cmd import call$/;"	kind:namespace	line:13
 call	../git.py	/^from call_cmd import call$/;"	kind:namespace	line:13
 call	../mail.py	/^from call_cmd import call$/;"	kind:namespace	line:17
+call	../resign.py	/^from call_cmd import call$/;"	kind:namespace	line:15
 call_cmd.py	../call_cmd.py	1;"	kind:file	line:1
 checkout_and_pull	../git.py	/^def checkout_and_pull(project_path, repo='origin', branch='master'):$/;"	kind:function	line:25
 codecs	../config.py	/^import codecs$/;"	kind:namespace	line:15
@@ -38,7 +40,7 @@ config	../build_ipa.py	/^import config$/;"	kind:namespace	line:17
 config	../filter_log.py	/^import config$/;"	kind:namespace	line:14
 config	../mail.py	/^import config$/;"	kind:namespace	line:16
 config.py	../config.py	1;"	kind:file	line:1
-config_file	../build.py	/^    config_file = options.config$/;"	kind:variable	line:177
+config_file	../build.py	/^    config_file = options.config$/;"	kind:variable	line:188
 date_format	../build.py	/^import date_format$/;"	kind:namespace	line:25
 date_format.py	../date_format.py	1;"	kind:file	line:1
 datetime	../build.py	/^import datetime$/;"	kind:namespace	line:15
@@ -70,12 +72,18 @@ msg_with_intall_info	../filter_log.py	/^def msg_with_intall_info(last_commit, bu
 os	../build.py	/^import os$/;"	kind:namespace	line:13
 os	../build_ipa.py	/^import os$/;"	kind:namespace	line:13
 os	../config.py	/^import os$/;"	kind:namespace	line:13
-parser	../build.py	/^    parser = OptionParser(usage)$/;"	kind:variable	line:172
+os	../resign.py	/^import os$/;"	kind:namespace	line:13
+parser	../build.py	/^    parser = OptionParser(usage)$/;"	kind:variable	line:183
 pull	../git.py	/^def pull(project_path, repo='origin', branch='master'):$/;"	kind:function	line:22
+re	../resign.py	/^import re$/;"	kind:namespace	line:14
 read_config	../config.py	/^def read_config(path=None):$/;"	kind:function	line:24
+read_profile_attribute	../resign.py	/^def read_profile_attribute(profile=None, attribute=None):$/;"	kind:function	line:85
 requests	../dingtalk_bot.py	/^import requests$/;"	kind:namespace	line:13
 res	../build_ipa.py	/^    res = runPipe([export_cmd, 'xcpretty'], file)$/;"	kind:variable	line:82
+resign	../build.py	/^import resign$/;"	kind:namespace	line:27
+resign	../resign.py	/^def resign(ipa=None, build_info=None):$/;"	kind:function	line:17
 resign.py	../resign.py	1;"	kind:file	line:1
+resign_app	../resign.py	/^def resign_app(app=None, cert=None, profile=None, app_name=None, bundle_id=None):$/;"	kind:function	line:39
 runPipe	../build_ipa.py	/^from call_cmd import call, runPipe$/;"	kind:namespace	line:15
 runPipe	../call_cmd.py	/^def runPipe(cmds, output=PIPE):$/;"	kind:function	line:29
 send	../mail.py	/^def send(text, subject=None, cc=None, toAdd=None, log_file=None):$/;"	kind:function	line:19
@@ -85,13 +93,14 @@ send_success_msg	../mail.py	/^def send_success_msg(text, build):$/;"	kind:functi
 shlex	../call_cmd.py	/^import shlex$/;"	kind:namespace	line:14
 shutil	../build.py	/^import shutil$/;"	kind:namespace	line:16
 shutil	../build_ipa.py	/^import shutil$/;"	kind:namespace	line:14
-start_time	../build.py	/^    start_time = datetime.datetime.now()$/;"	kind:variable	line:168
+shutil	../resign.py	/^import shutil$/;"	kind:namespace	line:12
+start_time	../build.py	/^    start_time = datetime.datetime.now()$/;"	kind:variable	line:179
 strfdelta	../date_format.py	/^def strfdelta(tdelta, fmt):$/;"	kind:function	line:18
 subprocess	../call_cmd.py	/^import subprocess$/;"	kind:namespace	line:12
 sys	../build.py	/^import sys$/;"	kind:namespace	line:14
-target	../build.py	/^    target = options.target$/;"	kind:variable	line:179
+target	../build.py	/^    target = options.target$/;"	kind:variable	line:190
 upload	../bugly.py	/^def upload(archive=None, build_info=None):$/;"	kind:function	line:16
 upload	../fir.py	/^def upload(fir_path=None, ipa=None, token=None):$/;"	kind:function	line:15
-usage	../build.py	/^    usage = "usage: %prog [options] arg"$/;"	kind:variable	line:170
+usage	../build.py	/^    usage = "usage: %prog [options] arg"$/;"	kind:variable	line:181
 valid_config	../config.py	/^def valid_config(config=None):$/;"	kind:function	line:31
 yaml	../config.py	/^import yaml$/;"	kind:namespace	line:16

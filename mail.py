@@ -16,7 +16,7 @@ from sender import Attachment
 import config
 from call_cmd import call
 
-def send(text, subject=None, cc=None, toAdd=None, log_file=None):
+def send(text, subject=None, toAdd=None, cc=None, log_file=None):
     mail_info = config.config_dic['mail_info']
     sslPort = 465
     server = mail_info.get('server')
