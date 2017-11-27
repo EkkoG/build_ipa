@@ -10,6 +10,8 @@
 send mail
 """
 
+import os
+import zipfile
 from sender import Mail
 from sender import Message
 from sender import Attachment 
@@ -36,8 +38,10 @@ def send(text, subject=None, toAdd=None, cc=None, log_file=None):
         msg.cc = cc 
     
     if log_file:
-        with open(log_file) as f:
-            attachment = Attachment("build.log", "text/plain", f.read())
+        zip_path = 'build.log.zip'
+        zip_file(log_file , zip_path)
+        with open(zip_path, encoding='ISO-8859-1') as f:
+            attachment = Attachment("build.log.zip", "application/octet-stream", f.read())
             msg.attach(attachment)
 
     msg.body = text
@@ -63,3 +67,12 @@ def get_subject(build):
     build_version = call('''/usr/libexec/PlistBuddy -c "Print CFBundleVersion" {}'''.format(config.config_dic['project_path'] + build_info['info_plist']))[1]
     subject = build_info['app_name'] + ' ' + str.strip(version) + ' ' + 'Build' + ' ' + str.strip(build_version)
     return subject
+
+def zip_file(file_path, zip_path):
+    zip_file = zipfile.ZipFile(zip_path, 'w')
+    file_name = file_path.split('/')[-1]
+    base_path = file_path.replace(file_name, '')
+    print(base_path)
+    lenDirPath = len(base_path)
+    zip_file.write(file_path, file_path[lenDirPath :] )
+    zip_file.close()
