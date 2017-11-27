@@ -12,7 +12,7 @@ build ipa
 
 import os
 import shutil
-from call_cmd import call, runPipe
+from call_cmd import call
 
 import config
 
@@ -25,7 +25,7 @@ def build_ipa(target=None):
     archive_cmd = "xcodebuild archive -workspace {} -scheme {} -archivePath {} ONLY_ACTIVE_ARCH=NO TARGETED_DEVICE_FAMILY=1 -allowProvisioningUpdates".format(config.config_dic['project_path'] + config.config_dic['worspace_name'], scheme_name, archive_path)
     log_file = config.config_dic['log_path'] + config.config_dic['builg_log']
     file = open(log_file, 'w+')
-    res = runPipe([archive_cmd, 'xcpretty'], file)
+    res = call(archive_cmd, file)
 
     if res[0] != 0:
         return (1, None, None)
@@ -79,7 +79,7 @@ def build_ipa(target=None):
         f.write(export_plist)
 
     export_cmd = "xcodebuild -exportArchive -archivePath {} -exportOptionsPlist {} -exportPath {} -allowProvisioningUpdates".format(archive_path, export_plist_path, config.config_dic['builds_path'])
-    res = runPipe([export_cmd, 'xcpretty'], file)
+    res = call(export_cmd, file)
 
     if res[0] != 0:
         return (1, None, None)
