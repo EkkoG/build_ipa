@@ -94,6 +94,15 @@ def build_and_upload(build_target):
     print('Building...')
     build_res = build_ipa.build_ipa(build_target)
 
+    if build_res[0] != 0:
+        print('Build failure!')
+        failture_mail_info = config.config_dic['email_after_failure']
+        if failture_mail_info['enable']:
+            mail.send_failture_msg('Build failure!', build_target)
+        return build_res
+
+    print('Build success!')
+    
     resign_info = None 
     if 'resign' in build_info:
         resign_info = build_info['resign']
@@ -105,32 +114,25 @@ def build_and_upload(build_target):
             build_res = (1, None, None)
             return build_res
 
-    if build_res[0] != 0:
-        print('Build failure!')
-        failture_mail_info = config.config_dic['email_after_failure']
-        if failture_mail_info['enable']:
-            mail.send_failture_msg('Build failure!', build_target)
-    else:
-        print('Build success!')
-        cp_info = config.config_dic['copy_to']
-        if cp_info['enable']:
-            path = cp_info['path']
-            if not os.path.exists(path):
-                os.mkdir(path)
-            shutil.copy(build_res[2], path)
-            print('Copy to {}'.format(path))
-        
-        fir_info = config.config_dic['upload_to_fir']
-        if  fir_info['enable']:
-            print('Upload to fir.im...')
-            fir.upload(fir_info['path'], build_res[2], fir_info['token'])
-            print('Upload complete!')
+    cp_info = config.config_dic['copy_to']
+    if cp_info['enable']:
+        path = cp_info['path']
+        if not os.path.exists(path):
+            os.mkdir(path)
+        shutil.copy(build_res[2], path)
+        print('Copy to {}'.format(path))
+    
+    fir_info = config.config_dic['upload_to_fir']
+    if  fir_info['enable']:
+        print('Upload to fir.im...')
+        fir.upload(fir_info['path'], build_res[2], fir_info['token'])
+        print('Upload complete!')
 
-        bugly_info = config.config_dic['bugly']
-        if bugly_info['enable']:
-            print('Upload symbol file to bugly...')
-            bugly.upload(build_res[1], build_info)
-            print('Upload complete!')
+    bugly_info = config.config_dic['bugly']
+    if bugly_info['enable']:
+        print('Upload symbol file to bugly...')
+        bugly.upload(build_res[1], build_info)
+        print('Upload complete!')
     return build_res
 
 def build(build_target, send_msg=True):

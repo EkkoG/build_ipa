@@ -22,9 +22,10 @@ def build_ipa(target=None):
     scheme_name = build_info['scheme']
     archive_path = config.config_dic['builds_path'] + scheme_name + '.xcarchive'
 
-    archive_cmd = "xcodebuild archive -workspace {} -scheme {} -archivePath {} ONLY_ACTIVE_ARCH=NO TARGETED_DEVICE_FAMILY=1 -allowProvisioningUpdates".format(config.config_dic['project_path'] + config.config_dic['worspace_name'], scheme_name, archive_path)
     log_file = config.config_dic['log_path'] + config.config_dic['builg_log']
     file = open(log_file, 'w+')
+
+    archive_cmd = "xcodebuild archive -workspace {} -scheme {} -archivePath {} ONLY_ACTIVE_ARCH=NO TARGETED_DEVICE_FAMILY=1 -allowProvisioningUpdates".format(config.config_dic['project_path'] + config.config_dic['worspace_name'], scheme_name, archive_path)
     res = call(archive_cmd, file)
 
     if res[0] != 0:
