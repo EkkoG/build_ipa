@@ -39,8 +39,11 @@ def build_ipa(target=None):
 <string>{}</string>
 """.format(build_info['bundle_id'], build_info['provisioning_profile'])
 
-    if build_info['extra_provisioning_profile']:
-        for provisinging_profile in build_info['extra_provisioning_profile']:
+    extra_provisioning_profile = None
+    if 'extra_provisioning_profile' in build_info:
+        extra_provisioning_profile = build_info['extra_provisioning_profile']
+    if extra_provisioning_profile:
+        for provisinging_profile in extra_provisioning_profile:
             provisioning_profile_string += """
     <key>{}</key>
     <string>{}</string>

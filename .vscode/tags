@@ -4,10 +4,10 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
-Attachment	../mail.py	/^from sender import Attachment $/;"	kind:namespace	line:15
+Attachment	../mail.py	/^from sender import Attachment $/;"	kind:namespace	line:17
 DeltaTemplate	../date_format.py	/^class DeltaTemplate(Template):$/;"	kind:class	line:15
-Mail	../mail.py	/^from sender import Mail$/;"	kind:namespace	line:13
-Message	../mail.py	/^from sender import Message$/;"	kind:namespace	line:14
+Mail	../mail.py	/^from sender import Mail$/;"	kind:namespace	line:15
+Message	../mail.py	/^from sender import Message$/;"	kind:namespace	line:16
 OptionParser	../build.py	/^from optparse import OptionParser$/;"	kind:namespace	line:17
 OptionParser	../dingtalk_bot.py	/^from optparse import OptionParser$/;"	kind:namespace	line:14
 PIPE	../call_cmd.py	/^from subprocess import PIPE$/;"	kind:namespace	line:13
@@ -24,12 +24,12 @@ build_ipa	../build.py	/^import build_ipa$/;"	kind:namespace	line:19
 build_ipa	../build_ipa.py	/^def build_ipa(target=None):$/;"	kind:function	line:19
 build_ipa.py	../build_ipa.py	1;"	kind:file	line:1
 call	../bugly.py	/^from call_cmd import call$/;"	kind:namespace	line:13
-call	../build_ipa.py	/^from call_cmd import call, runPipe$/;"	kind:namespace	line:15
+call	../build_ipa.py	/^from call_cmd import call$/;"	kind:namespace	line:15
 call	../call_cmd.py	/^def call(cmd, output=PIPE):$/;"	kind:function	line:16
 call	../filter_log.py	/^from call_cmd import call$/;"	kind:namespace	line:13
 call	../fir.py	/^from call_cmd import call$/;"	kind:namespace	line:13
 call	../git.py	/^from call_cmd import call$/;"	kind:namespace	line:13
-call	../mail.py	/^from call_cmd import call$/;"	kind:namespace	line:17
+call	../mail.py	/^from call_cmd import call$/;"	kind:namespace	line:19
 call	../resign.py	/^from call_cmd import call$/;"	kind:namespace	line:15
 call_cmd.py	../call_cmd.py	1;"	kind:file	line:1
 checkout_and_pull	../git.py	/^def checkout_and_pull(project_path, repo='origin', branch='master'):$/;"	kind:function	line:25
@@ -38,7 +38,7 @@ config	../bugly.py	/^import config$/;"	kind:namespace	line:14
 config	../build.py	/^import config$/;"	kind:namespace	line:18
 config	../build_ipa.py	/^import config$/;"	kind:namespace	line:17
 config	../filter_log.py	/^import config$/;"	kind:namespace	line:14
-config	../mail.py	/^import config$/;"	kind:namespace	line:16
+config	../mail.py	/^import config$/;"	kind:namespace	line:18
 config.py	../config.py	1;"	kind:file	line:1
 config_file	../build.py	/^    config_file = options.config$/;"	kind:variable	line:188
 date_format	../build.py	/^import date_format$/;"	kind:namespace	line:25
@@ -58,7 +58,7 @@ fir.py	../fir.py	1;"	kind:file	line:1
 get_current_branch	../git.py	/^def get_current_branch(project_path):$/;"	kind:function	line:15
 get_current_commit	../git.py	/^def get_current_commit(project_path):$/;"	kind:function	line:30
 get_latest_commit_msg	../git.py	/^def get_latest_commit_msg(project_path):$/;"	kind:function	line:34
-get_subject	../mail.py	/^def get_subject(build):$/;"	kind:function	line:60
+get_subject	../mail.py	/^def get_subject(build):$/;"	kind:function	line:64
 git	../build.py	/^import git$/;"	kind:namespace	line:26
 git.py	../git.py	1;"	kind:file	line:1
 init	../config.py	/^def init(file_path=None):$/;"	kind:function	line:18
@@ -72,6 +72,7 @@ msg_with_intall_info	../filter_log.py	/^def msg_with_intall_info(last_commit, bu
 os	../build.py	/^import os$/;"	kind:namespace	line:13
 os	../build_ipa.py	/^import os$/;"	kind:namespace	line:13
 os	../config.py	/^import os$/;"	kind:namespace	line:13
+os	../mail.py	/^import os$/;"	kind:namespace	line:13
 os	../resign.py	/^import os$/;"	kind:namespace	line:13
 parser	../build.py	/^    parser = OptionParser(usage)$/;"	kind:variable	line:183
 pull	../git.py	/^def pull(project_path, repo='origin', branch='master'):$/;"	kind:function	line:22
@@ -79,17 +80,16 @@ re	../resign.py	/^import re$/;"	kind:namespace	line:14
 read_config	../config.py	/^def read_config(path=None):$/;"	kind:function	line:24
 read_profile_attribute	../resign.py	/^def read_profile_attribute(profile=None, attribute=None):$/;"	kind:function	line:85
 requests	../dingtalk_bot.py	/^import requests$/;"	kind:namespace	line:13
-res	../build_ipa.py	/^    res = runPipe([export_cmd, 'xcpretty'], file)$/;"	kind:variable	line:82
+res	../build_ipa.py	/^    res = call(export_cmd, file)$/;"	kind:variable	line:82
 resign	../build.py	/^import resign$/;"	kind:namespace	line:27
 resign	../resign.py	/^def resign(ipa=None, build_info=None):$/;"	kind:function	line:17
 resign.py	../resign.py	1;"	kind:file	line:1
 resign_app	../resign.py	/^def resign_app(app=None, cert=None, profile=None, app_name=None, bundle_id=None):$/;"	kind:function	line:39
-runPipe	../build_ipa.py	/^from call_cmd import call, runPipe$/;"	kind:namespace	line:15
 runPipe	../call_cmd.py	/^def runPipe(cmds, output=PIPE):$/;"	kind:function	line:29
-send	../mail.py	/^def send(text, subject=None, cc=None, toAdd=None, log_file=None):$/;"	kind:function	line:19
+send	../mail.py	/^def send(text, subject=None, toAdd=None, cc=None, log_file=None):$/;"	kind:function	line:21
 sendMessage	../dingtalk_bot.py	/^def sendMessage(message, tokens):$/;"	kind:function	line:16
-send_failture_msg	../mail.py	/^def send_failture_msg(text, build):$/;"	kind:function	line:53
-send_success_msg	../mail.py	/^def send_success_msg(text, build):$/;"	kind:function	line:47
+send_failture_msg	../mail.py	/^def send_failture_msg(text, build):$/;"	kind:function	line:57
+send_success_msg	../mail.py	/^def send_success_msg(text, build):$/;"	kind:function	line:51
 shlex	../call_cmd.py	/^import shlex$/;"	kind:namespace	line:14
 shutil	../build.py	/^import shutil$/;"	kind:namespace	line:16
 shutil	../build_ipa.py	/^import shutil$/;"	kind:namespace	line:14
@@ -104,3 +104,5 @@ upload	../fir.py	/^def upload(fir_path=None, ipa=None, token=None):$/;"	kind:fun
 usage	../build.py	/^    usage = "usage: %prog [options] arg"$/;"	kind:variable	line:181
 valid_config	../config.py	/^def valid_config(config=None):$/;"	kind:function	line:31
 yaml	../config.py	/^import yaml$/;"	kind:namespace	line:16
+zip_file	../mail.py	/^def zip_file(file_path, zip_path):$/;"	kind:function	line:71
+zipfile	../mail.py	/^import zipfile$/;"	kind:namespace	line:14
