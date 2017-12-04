@@ -37,6 +37,7 @@ def resign(ipa=None, build_info=None):
     ipa_dic = ipa.replace(ipa.split('/')[-1], '')
     shutil.move(resign_ipa_name, ipa_dic + '/' + resign_ipa_name)
     resign_ipa = ipa.replace(ipa.split('/')[-1], resign_ipa_name)
+    os.remove(ipa)
     return (0, resign_ipa)
 
 def resign_app(app=None, cert=None, profile=None, app_name=None, bundle_id=None):
