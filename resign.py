@@ -20,8 +20,11 @@ def resign(ipa=None, build_info=None):
     resign_info = build_info['resign']
     tmp_dir = call('mktemp -d')[1]
     call('unzip -q {} -d {}'.format(ipa, tmp_dir))
-    if resign_info['extentions']:
-        for extention in resign_info['extentions']:
+    extentions_info = None
+    if 'extentions' in resign_info:
+        extentions_info = resign_info['extentions']
+    if extentions_info:
+        for extention in extentions_info:
             resign_app('{}/Payload/{}.app/PlugIns/{}.appex'.format(tmp_dir, build_info['scheme'], extention['scheme']), resign_info['certificate'], extention['provisioning_profile'], None, extention['bundle_id'])
     
     resign_app('{}/Payload/{}.app'.format(tmp_dir, build_info['scheme']), resign_info['certificate'], resign_info['provisioning_profile'], resign_info['app_name'], resign_info['bundle_id'])

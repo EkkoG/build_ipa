@@ -97,7 +97,7 @@ def build_and_upload(build_target):
     resign_info = None 
     if 'resign' in build_info:
         resign_info = build_info['resign']
-    if resign and resign_info['enable']:
+    if resign_info and resign_info['enable']:
         resign_res = resign.resign(build_res[2], build_info)
         if resign_res[0] == 0:
             build_res = (build_res[0], build_res[1], resign_res[1])
