@@ -45,7 +45,7 @@ def resign_app(app=None, cert=None, profile=None, app_name=None, bundle_id=None)
     if os.path.exists(signature):
         shutil.rmtree(signature)
     shutil.copyfile(profile, app + '/embedded.mobileprovision')
-    tmp_entitlements = 'entitlements.plist'
+    tmp_entitlements = '/tmp/entitlements.plist'
     with open(tmp_entitlements, 'w+') as f:
         call('codesign -d --entitlements - ' + app, f)
 
