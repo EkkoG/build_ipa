@@ -11,6 +11,7 @@ resign ipa
 """
 import shutil
 import os
+import zipfile
 import re
 from call_cmd import call
 
@@ -28,15 +29,11 @@ def resign(ipa=None, build_info=None):
             resign_app('{}/Payload/{}.app/PlugIns/{}.appex'.format(tmp_dir, build_info['scheme'], extention['scheme']), resign_info['certificate'], extention['provisioning_profile'], None, extention['bundle_id'])
     
     resign_app('{}/Payload/{}.app'.format(tmp_dir, build_info['scheme']), resign_info['certificate'], resign_info['provisioning_profile'], resign_info['app_name'], resign_info['bundle_id'])
-    shutil.move('{}/Payload'.format(tmp_dir), './')
     file_name_pieces = ipa.split('/')[-1].split('.ipa')
     resign_ipa_name = file_name_pieces[0] + '-resign.ipa'
-    call('zip -qr {} {}'.format(resign_ipa_name, 'Payload'))
-    shutil.rmtree(tmp_dir)
-    shutil.rmtree('Payload')
-    ipa_dic = ipa.replace(ipa.split('/')[-1], '')
-    shutil.move(resign_ipa_name, ipa_dic + '/' + resign_ipa_name)
     resign_ipa = ipa.replace(ipa.split('/')[-1], resign_ipa_name)
+    zipDir(tmp_dir, resign_ipa)
+    shutil.rmtree(tmp_dir)
     os.remove(ipa)
     return (0, resign_ipa)
 
@@ -103,3 +100,11 @@ def read_profile_attribute(profile=None, attribute=None):
     else:
         return None
 
+def zipDir(dirPath, zipPath):
+    zipf = zipfile.ZipFile(zipPath , mode='w')
+    lenDirPath = len(dirPath)
+    for root, _ , files in os.walk(dirPath):
+        for file in files:
+            filePath = os.path.join(root, file)
+            zipf.write(filePath , filePath[lenDirPath :] )
+    zipf.close()
