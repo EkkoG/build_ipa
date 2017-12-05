@@ -69,10 +69,10 @@ def get_subject(build):
     return subject
 
 def zip_file(file_path, zip_path):
-    zip_file = zipfile.ZipFile(zip_path, 'w')
+    zip_file = zipfile.ZipFile(zip_path, 'w', compression=zipfile.ZIP_DEFLATED)
     file_name = file_path.split('/')[-1]
     base_path = file_path.replace(file_name, '')
     print(base_path)
     lenDirPath = len(base_path)
-    zip_file.write(file_path, file_path[lenDirPath :] )
+    zip_file.write(file_path, file_path[lenDirPath :])
     zip_file.close()

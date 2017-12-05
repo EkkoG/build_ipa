@@ -101,10 +101,10 @@ def read_profile_attribute(profile=None, attribute=None):
         return None
 
 def zipDir(dirPath, zipPath):
-    zipf = zipfile.ZipFile(zipPath , mode='w')
+    zipf = zipfile.ZipFile(zipPath, mode='w', compression=zipfile.ZIP_DEFLATED)
     lenDirPath = len(dirPath)
     for root, _ , files in os.walk(dirPath):
         for file in files:
             filePath = os.path.join(root, file)
-            zipf.write(filePath , filePath[lenDirPath :] )
+            zipf.write(filePath ,filePath[lenDirPath :])
     zipf.close()
