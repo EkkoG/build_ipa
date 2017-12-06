@@ -38,7 +38,7 @@ def send(text, subject=None, toAdd=None, cc=None, log_file=None):
         msg.cc = cc 
     
     if log_file:
-        zip_path = 'build.log.zip'
+        zip_path = '/tmp/build.log.zip'
         zip_file(log_file , zip_path)
         with open(zip_path, encoding='ISO-8859-1') as f:
             attachment = Attachment("build.log.zip", "application/octet-stream", f.read())
